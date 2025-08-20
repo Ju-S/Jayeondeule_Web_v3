@@ -1,35 +1,52 @@
 package com.jayeondeule.smartfarm.controller;
 
-import com.jayeondeule.smartfarm.dto.FarmDTO;
-import com.jayeondeule.smartfarm.dto.FarmRegisterDTO;
+import com.jayeondeule.smartfarm.dto.farm.FarmDTO;
+import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
+import com.jayeondeule.smartfarm.dto.user.UserDTO;
+import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
 import com.jayeondeule.smartfarm.service.FarmService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 //농장 등록, 수정, 조회 관련 API
 @RestController
+@RequestMapping("/api/farm")
+@RequiredArgsConstructor
 public class FarmController {
-
     private final FarmService farmService;
 
-    public FarmController(FarmService farmService) {
-        this.farmService = farmService;
-    }
-
-    //어드민 페이지 등록 농장 리스트
-    @GetMapping("/adminPage")
-    public ResponseEntity<List<FarmDTO>> adminPageGetList(@RequestParam String page) {
-        //farmDTOS 리스트에 현재 DB에 등록된 농장의 정보를 담아서 return
-        return ResponseEntity.ok(farmService.getFarmsPage(page));
-    }
-
     //농장 등록
-    @PostMapping("/farmRegister")
-    public ResponseEntity<FarmDTO> farmRegister(@Valid @RequestBody FarmRegisterDTO farmRegisterInfo){
-        //농장 등록 후, 등록 성공 여부 및 등록된 농장 데이터 반환
-        return ResponseEntity.ok(farmService.farmRegister(farmRegisterInfo));
+    @PostMapping
+    public ResponseEntity<Boolean> insertFarm(@RequestBody FarmInsertDTO insertInfo,
+                                              @AuthenticationPrincipal UserDTO userInfo) {
+        return null;
+    }
+
+    //농장 리스트
+    @GetMapping
+    public ResponseEntity<List<FarmDTO>> getFarmList(@AuthenticationPrincipal UserDTO userInfo) {
+        //jwt에서 userInfo를 조회해서 권한확인 후 분기
+        return null;
+    }
+
+    //농장 정보 수정
+    @PatchMapping
+    public ResponseEntity<Boolean> patchFarm(@RequestBody UserPatchDTO modifiedInfo,
+                                             @RequestParam String farmId,
+                                             @AuthenticationPrincipal UserDTO userInfo
+                                             ) {
+        return null;
+    }
+
+    //농장 삭제
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteFarm(@RequestParam String farmId,
+                                              @AuthenticationPrincipal UserDTO userInfo) {
+        return null;
     }
 }

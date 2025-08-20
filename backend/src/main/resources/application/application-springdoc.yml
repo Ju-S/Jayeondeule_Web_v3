@@ -1,0 +1,15 @@
+springdoc:
+  title: 'Jayeondeule Web API'
+  version: 'V3.0'
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    doc-expansion: none
+
+swagger-ui:
+  ip: 127.0.0.1, 0:0:0:0:0:0:0:1, localhost
