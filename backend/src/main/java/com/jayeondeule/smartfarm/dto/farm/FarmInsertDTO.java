@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 public class FarmInsertDTO {
     private String farmName; // 농장 이름
     private String farmDomi; // 농장 도메인
+
     private LocalDateTime openDate; // 개업일자
+
     private String telNo; // 대표번호
     private String hpNo; // 전화번호
     private String faxNo; // 팩스번호

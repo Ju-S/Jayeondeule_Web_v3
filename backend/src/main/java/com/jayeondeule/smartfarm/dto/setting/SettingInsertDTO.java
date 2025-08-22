@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class SettingInsertDTO {
     private LightIrrigationSettingInsertDTO lightIrrigationSettingInsertDTO;
-    private SensorSettingInsertDTO sensorSettingPatchDTO;
+    private SensorSettingInsertDTO sensorSettingInsertDTO;
 }

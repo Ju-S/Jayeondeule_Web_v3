@@ -5,7 +5,6 @@ import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
 import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
 import com.jayeondeule.smartfarm.service.FarmService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,16 +14,16 @@ import java.util.List;
 
 //농장 등록, 수정, 조회 관련 API
 @RestController
-@RequestMapping("/api/farm")
+@RequestMapping("/api/farms")
 @RequiredArgsConstructor
 public class FarmController {
     private final FarmService farmService;
 
     //농장 등록
     @PostMapping
-    public ResponseEntity<Boolean> insertFarm(@RequestBody FarmInsertDTO insertInfo,
-                                              @AuthenticationPrincipal UserDTO userInfo) {
-        return null;
+    public void insertFarm(@RequestBody FarmInsertDTO insertInfo,
+                           @AuthenticationPrincipal UserDTO userInfo) {
+
     }
 
     //농장 리스트
@@ -35,18 +34,18 @@ public class FarmController {
     }
 
     //농장 정보 수정
-    @PatchMapping
-    public ResponseEntity<Boolean> patchFarm(@RequestBody UserPatchDTO modifiedInfo,
-                                             @RequestParam String farmId,
-                                             @AuthenticationPrincipal UserDTO userInfo
-                                             ) {
-        return null;
+    @PatchMapping("/{farmId}")
+    public void patchFarm(@RequestBody UserPatchDTO modifiedInfo,
+                          @PathVariable Long farmId,
+                          @AuthenticationPrincipal UserDTO userInfo
+    ) {
+
     }
 
     //농장 삭제
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteFarm(@RequestParam String farmId,
-                                              @AuthenticationPrincipal UserDTO userInfo) {
-        return null;
+    @DeleteMapping("/{farmId}")
+    public void deleteFarm(@PathVariable Long farmId,
+                           @AuthenticationPrincipal UserDTO userInfo) {
+
     }
 }

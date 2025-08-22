@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:8088", // 백엔드 주소
+    baseURL: import.meta.env.VITE_API_BASE_URL, // 백엔드 주소
 });
 
 // 요청마다 JWT 붙이기

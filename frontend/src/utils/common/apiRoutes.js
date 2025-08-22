@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const apiRoutes = {
     auth: {
@@ -6,14 +6,14 @@ const apiRoutes = {
          * 로그인 API<br>
          * POST /api/auth<br>
          * body: { userId, passwd }<br>
-         * response: 사용자 정보 + 토큰
+         * response: {UserInfoDTO} + 토큰(JWT)
          */
         login: {url: `${BASE_URL}/auth`, method: "POST"},
 
         /**
          * 사용자 정보 API<br>
-         * GET /api/auth<br>
-         * param: {token}
+         * GET /api/auth
+         * response: {UserInfoDTO}
          */
         getUser: {url: `${BASE_URL}/auth`, method: "GET"},
     },
@@ -24,140 +24,169 @@ const apiRoutes = {
          * param: {userId}<br>
          * response: true(중복)/false(중복아님)
          */
-        checkUserId: (userId) => ({url: `${BASE_URL}/user/${userId}`, method: "GET"}),
+        checkUserId: (userId) => ({url: `${BASE_URL}/users/id-dupl-check?userId=${userId}`, method: "GET"}),
 
         /**
          * 회원가입 API<br>
          * POST /api/user<br>
          * body: {UserInsertDTO}
          */
-        register: {url: `${BASE_URL}/user`, method: "POST"},
+        register: {url: `${BASE_URL}/users`, method: "POST"},
 
         /**
          * 특정 사용자 관리 API<br>
          * GET/PATCH/DELETE /api/users<br>
-         * param: {userId}
+         * pathVariable: {userId}
          */
-        management: (userId) => `${BASE_URL}/user/${userId}`
+        management: (userId) => `${BASE_URL}/users/${userId}`
     },
-    farm: {
+    farms: {
         /**
          * 소유 농장 목록 조회 API<br>
-         * GET /api/farm<br>
-         * param: {userId}<br>
+         * GET /api/farms<br>
+         * pathVariable: {userId}<br>
          * response: {List<FarmDTO>}
          */
-        list: (userId) => ({url: `${BASE_URL}/farm/${userId}`, method: "GET"}),
+        list: (userId) => ({url: `${BASE_URL}/farms/${userId}`, method: "GET"}),
 
         /**
          * 농장 등록 API<br>
-         * POST /api/farm<br>
+         * POST /api/farms<br>
          * body: {FarmInsertDTO}
          */
-        register: {url: `${BASE_URL}/farm`, method: "POST"},
+        register: {url: `${BASE_URL}/farms`, method: "POST"},
 
         /**
          * 특정 농장 관리 API<br>
-         * GET/PATCH/DELETE /api/farm<br>
-         * param: {farmId}
+         * GET/PATCH/DELETE /api/farms<br>
+         * pathVariable: {farmId}
          */
-        management: (farmId) => `${BASE_URL}/farm/${farmId}`
+        management: (farmId) => `${BASE_URL}/farms/${farmId}`
     },
-    house: {
+    houses: {
         /**
          * 농장 재배사 목록 조회 API<br>
-         * GET /api/house<br>
-         * param: {farmId}<br>
+         * GET /api/farms/${farmId}/houses<br>
+         * pathVariable: {farmId}<br>
          * response: {List<FarmHouseDTO>}
          */
-        list: (farmId) => ({url: `${BASE_URL}/house/${farmId}`, method: "GET"}),
+        list: (farmId) => ({url: `${BASE_URL}/farms/${farmId}/houses`, method: "GET"}),
 
         /**
          * 재배사 등록 API<br>
-         * POST /api/farm<br>
+         * POST /api/farms/${farmId}/houses<br>
+         * pathVariable: {farmId}<br>
          * body: {FarmHouseInsertDTO}
          */
-        register: {url: `${BASE_URL}/house`, method: "POST"},
+        register: (farmId) => ({url: `${BASE_URL}/farms/${farmId}/houses`, method: "POST"}),
 
         /**
          * 특정 재배사 관리 API<br>
-         * GET/PATCH/DELETE /api/house<br>
-         * param: {houseId}
+         * GET/PATCH/DELETE /api/farms/${farmId}/house/${houseId}<br>
+         * pathVariable: {farmId, houseId}
          */
-        management: (houseId) => `${BASE_URL}/house/${houseId}`
+        management: (farmId, houseId) => `${BASE_URL}/farms/${farmId}/houses/${houseId}`
     },
-    memo: {
+    memos: {
+        // farmhouse_l_crops가 memo의 역할을 함.
         /**
          * 재배사 메모 목록 조회 API<br>
-         * GET /api/memo<br>
-         * param: {houseId}<br>
+         * GET /api/farms/${farmId}/houses/${houseId}/memos<br>
+         * pathVariable: {farmId, houseId}<br>
          * response: {List<MemoDTO>}
          */
-        list: (houseId) => ({url: `${BASE_URL}/memo/${houseId}`, method: "GET"}),
+        list: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos`,
+            method: "GET"
+        }),
 
         /**
          * 메모 등록 API<br>
-         * POST /api/memo<br>
+         * POST /api/farms/${farmId}/houses/${houseId}/memos<br>
          * body: {MemoInsertDTO}
          */
-        insert: {url: `${BASE_URL}/memo`, method: "POST"},
+        insert: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos`,
+            method: "POST"
+        }),
 
         /**
          * 특정 메모 관리 API<br>
-         * GET/PATCH/DELETE /api/memo<br>
-         * param: {memoId}
+         * GET/PATCH/DELETE /api/farms/${farmId}/houses/${houseId}/memos/${recdDttm}<br>
+         * pathVariable: {farmId, houseId, recdDttm}
          */
-        management: (memoId) => `${BASE_URL}/memo/${memoId}`
+        management: (farmId, houseId, recdDttm) =>
+            `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos/${recdDttm}`
     },
-    relay: {
+    relays: {
         /**
          * 재배사 릴레이 상태 조회 API<br>
-         * GET /api/relay<br>
-         * param: {houseId}<br>
+         * GET /api/farms/${farmId}/houses/${houseId}/relays<br>
+         * pathVariable: {farmId, houseId}<br>
          * response: {RelayDTO}
          */
-        list: (houseId) => ({url: `${BASE_URL}/relay/${houseId}`, method: "GET"}),
+        list: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/relays`,
+            method: "GET"
+        }),
 
         /**
          * 릴레이 상태 기록 API<br>
-         * POST /api/relay<br>
-         * param: {houseId}<br>
-         * body: {RelayDTO}
+         * POST /api/farms/${farmId}/houses/${houseId}/relays<br>
+         * pathVariable: {farmId, houseId}<br>
+         * body: {RelayInsertDTO}
          */
-        insert: (houseId) => ({url: `${BASE_URL}/relay/${houseId}`, method: "POST"}),
+        insert: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/relays`,
+            method: "POST"
+        }),
     },
-    sensor: {
+    sensors: {
         /**
          * 재배사 센서 상태 조회 API<br>
-         * GET /api/sensor<br>
-         * param: {houseId}<br>
+         * GET /api/farms/${farmId}/houses/${houseId}/sensors?limits=${limits}<br>
+         * pathVariable: {farmId, houseId}<br>
+         * param: {limits}<br>
          * response: {SensorDataDTO}
          */
-        list: (houseId) => ({url: `${BASE_URL}/sensor/${houseId}`, method: "GET"}),
+        list: (farmId, houseId, limits="") => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/sensors?limits=${limits}`,
+            method: "GET"
+        }),
     },
-    setting: {
+    settings: {
         /**
          * 재배사 설정 상태 조회 API<br>
-         * GET /api/setting<br>
-         * param: {houseId}<br>
+         * GET /api/farms/${farmId}/houses/${houseId}/settings<br>
+         * pathVariable: {farmId, houseId}<br>
          * response: {SensorSettingDTO, List<LightIrrigationSettingDTO>}
          */
-        list: (houseId) => ({url: `${BASE_URL}/setting/${houseId}`, method: "GET"}),
+        list: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings`,
+            method: "GET"
+        }),
 
         /**
          * 설정 등록 API<br>
          * POST /api/setting<br>
-         * param: {houseId}<br>
+         * pathVariable: {farmId, houseId}<br>
          * body: {SensorSettingDTO, List<LightIrrigationSettingDTO>}
          */
-        insert: (houseId) => ({url: `${BASE_URL}/setting/${houseId}`, method: "POST"}),
+        insert: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings`,
+            method: "POST"
+        }),
 
         /**
          * 관수, 조명 설정 관리 API<br>
-         * GET/PATCH /api/setting<br>
-         * param: {lightIrrigationSettingId}
+         * PATCH /api/setting<br>
+         * pathVariable: {farmId, houseId, setDttm}<br>
+         * body: {LightIrrigationSettingPatchDTO}
          */
-        management: (lightIrrigationSettingId) => `${BASE_URL}/setting/${lightIrrigationSettingId}`
+        update: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings/${setDttm}`,
+            method: "PATCH"
+        }),
     },
 };
 

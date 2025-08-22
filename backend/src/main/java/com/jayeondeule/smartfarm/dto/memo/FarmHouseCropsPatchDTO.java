@@ -6,7 +6,6 @@ import lombok.Setter;
 //재배사 메모 DTO
 @Getter
 @Setter
-public class MemoDTO {
+public class FarmHouseCropsPatchDTO {
     private String memo; // 메모내용
-    private String author; // 작성자
 }

@@ -1,9 +1,6 @@
 package com.jayeondeule.smartfarm.dto.relay;
 
 import com.jayeondeule.smartfarm.entity.house.FarmHouse;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class RelayDTO {
-    private LocalDateTime recd_dttm; // 측정일자
-
+public class RelayInsertDTO {
     private boolean relay1stFlag = false; // 릴레이1 작동 여부
     private boolean relay2stFlag = false; // 릴레이2 작동 여부
     private boolean relay3stFlag = false; // 릴레이3 작동 여부

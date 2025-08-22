@@ -17,9 +17,9 @@ public class Farm {
     )
     @SequenceGenerator(
             name = "farm_seq_gen",
-            sequenceName = "farm_seq",
+            sequenceName = "farm_id_seq",
             allocationSize = 1,
-            initialValue = 0
+            initialValue = 1000
     )
     private long farmId;
 
@@ -45,7 +45,7 @@ public class Farm {
     private String faxNo; // 팩스번호
 
     @Column
-    private String email; // 대표메일
+    private String mail; // 대표메일
 
     @Column(nullable = false)
     private String ipAddr; // 농장 IP 정보
@@ -53,13 +53,18 @@ public class Farm {
     @Column(nullable = false)
     private String port; // 포트 정보
 
+    @Column
+    private int regn; // 지역 번호
+
+    @Column
     private String addr; // 주소
 
-    private String mainPrdt; // 주요 작물
+    @Column
+    private int mainPrdt; // 주요 작물
 
     @Column(columnDefinition = "TEXT")
     private String rmks; // 농장 설명
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
     private LocalDateTime rgstDttm = LocalDateTime.now(); // 등록일자
 }

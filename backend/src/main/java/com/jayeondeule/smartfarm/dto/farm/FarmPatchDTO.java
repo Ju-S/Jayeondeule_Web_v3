@@ -1,18 +1,15 @@
 package com.jayeondeule.smartfarm.dto.farm;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-// 농장 조회 DTO
+// 농장 등록 DTO
 @Getter
 @Setter
-public class FarmDTO {
+public class FarmPatchDTO {
     //농장 관련 데이터 전송 객체
-    private long farmId;
-
     private String farmName; // 농장 이름
     private String farmDomi; // 농장 도메인
 
@@ -28,6 +25,4 @@ public class FarmDTO {
     private String addr; // 주소
     private String mainPrdt; // 주요 작물
     private String rmks; // 농장 설명
-
-    private LocalDateTime rgstDttm; // 등록일자
 }

@@ -12,12 +12,11 @@ import java.time.LocalDateTime;
 @Table(name = "USER_M_INFO")
 public class User {
     //USER_M_INFO 테이블에 대응하는 엔티티
-    @ManyToOne
-    @JoinColumn(name = "farm_id")
-    private Farm farm;
-
     @Id
     private String userId; // 아이디
+
+    @Column
+    private long farmId;
 
     @Column(nullable = false)
     private String passwd; // 비밀번호 (암호화 필요)
@@ -35,6 +34,6 @@ public class User {
     @Column
     private String hpNo; // 전화번호
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
     private LocalDateTime rgstDttm = LocalDateTime.now(); // 가입일자
 }

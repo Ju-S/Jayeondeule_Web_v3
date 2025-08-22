@@ -1,6 +1,5 @@
 package com.jayeondeule.smartfarm.entity.relay;
 
-import com.jayeondeule.smartfarm.entity.house.FarmHouse;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,25 +7,19 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@IdClass(RelayRecording.class)
 @Table(name = "RELAY_L_RECORDING")
 public class RelayRecording {
     //RELAY_L_RECORDING 테이블 엔티티 (릴레이 동작상태, 저장일자 등)
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "relay_seq_gen"
-    )
-    @SequenceGenerator(
-            name = "relay_seq_gen",
-            sequenceName = "relay_seq",
-            allocationSize = 1,
-            initialValue = 0
-    )
-    private long id;
+    private long farmId;
 
-    @ManyToOne
-    @JoinColumn(name = "hous_id", nullable = false)
-    private FarmHouse hous; // 릴레이가 속한 재배사
+    @Id
+    private long housId; // 릴레이가 속한 재배사
+
+    @Id
+    @Column(columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
+    private LocalDateTime recd_dttm = LocalDateTime.now();; // 측정일자
 
     @Column(nullable = false, name = "relay_1st_flag")
     private boolean relay1stFlag = false; // 릴레이1 작동 여부
@@ -75,7 +68,4 @@ public class RelayRecording {
 
     @Column(nullable = false, name = "relay_16st_flag")
     private boolean relay16stFlag = false; // 릴레이16 작동 여부
-
-    @Column(nullable = false)
-    private LocalDateTime recd_dttm = LocalDateTime.now();; // 측정일자
 }

@@ -9,30 +9,19 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "SENSORM_SETTING")
+@IdClass(SensorSettingId.class)
+@Table(name = "SENSOR_M_SETTING")
 public class SensorSetting {
     //SENSORM_SETTING 테이블 (온도, 습도, co2 등 설정 값)
+    @Id
+    private long farmId;
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "setting_seq_gen"
-    )
-    @SequenceGenerator(
-            name = "setting_seq_gen",
-            sequenceName = "setting_seq",
-            allocationSize = 1,
-            initialValue = 0
-    )
-    private long id;
+    private long housId; // 설정이 속한 재배사
 
-    @ManyToOne
-    @JoinColumn(name = "farm_id", nullable = false)
-    private Farm farm; // 설정이 속한 농장
-
-    @ManyToOne
-    @JoinColumn(name = "hous_id", nullable = false)
-    private FarmHouse hous; // 설정이 속한 재배사
+    @Id
+    @Column(columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
+    private LocalDateTime setnDttm = LocalDateTime.now(); // 설정일자
 
     @Column(nullable = false)
     private double tprtMin = 0;
@@ -63,7 +52,4 @@ public class SensorSetting {
 
     @Column(nullable = false)
     private double heatTprtMax = 0;
-
-    @Column(nullable = false)
-    private LocalDateTime setnDttm = LocalDateTime.now(); // 설정일자
 }

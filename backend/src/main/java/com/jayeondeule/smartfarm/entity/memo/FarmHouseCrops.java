@@ -1,32 +1,26 @@
-package com.jayeondeule.smartfarm.entity.house;
+package com.jayeondeule.smartfarm.entity.memo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Entity
+@IdClass(FarmHouseCropsId.class)
 @Table(name = "FARMHOUSE_I_CROPS")
 public class FarmHouseCrops {
     // FARMHOUSE_I_CROPS 테이블에 대응하는 엔티티
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "farmhous_crops_seq_gen"
-    )
-    @SequenceGenerator(
-            name = "farmhous_crops_seq_gen",
-            sequenceName = "farmhous_crops_seq",
-            allocationSize = 1,
-            initialValue = 0
-    )
-    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "hous_id", nullable = false)
-    private FarmHouse hous; // 작물이 속한 재배사
+    @Id
+    private long farmId;
+
+    @Id
+    private long housId; // 작물이 속한 재배사
+
+    @Id
+    @Column(columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
+    private LocalDateTime recdDttm = LocalDateTime.now(); // 기록일자
 
     @Column
     private int cropStat;
@@ -65,20 +59,20 @@ public class FarmHouseCrops {
     private int cropGradeAmut5 = 0;
 
     @Column
+    private String ahtr; // 작성자
+
+    @Column
     private String rmks; // 설명
 
     @Column
-    private List<String> oriFileImge;
+    private String orgn; // 업로드 이미지 파일명
 
     @Column
-    private List<String> sysFileImge;
+    private String sstm; // 업로드 이미지 실제 경로
 
     @Column(nullable = false)
     private LocalDateTime cropStrtDate; // 작물 재배 시작 일자
 
     @Column
     private LocalDateTime cropEndDate; // 작물 재배 종료 일자
-
-    @Column(nullable = false)
-    private LocalDateTime recdDttm = LocalDateTime.now(); // 기록일자
 }
