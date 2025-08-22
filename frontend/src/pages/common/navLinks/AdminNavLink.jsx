@@ -11,6 +11,9 @@ export default function AdminNavLink() {
                 <NavDropdown.Divider/>
                 <NavDropdown.Item as={Link} to="/farm-register">농장 등록</NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown title="사용자 관리" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/assign-farm-roles">권한부여</NavDropdown.Item>
+            </NavDropdown>
         </>
     )
 }

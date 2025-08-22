@@ -24,15 +24,12 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("로그인 시도:", loginInfo);
         try {
             const res = await loginUser(loginInfo);
             dispatch(loginSuccess(res.data));
             navigate("/");
-            console.log(res.data);
         } catch (err) {
             setErrorMessage(err.response.data.message);
-            console.error(err);
         }
     };
 

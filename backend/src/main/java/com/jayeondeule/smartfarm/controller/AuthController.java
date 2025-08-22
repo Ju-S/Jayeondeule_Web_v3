@@ -27,7 +27,7 @@ public class AuthController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginDTO loginInfo) {
         try {
             // 로그인 처리
-            UserPatchDTO userInfo = authService.login(loginInfo);
+            UserDTO userInfo = authService.login(loginInfo);
 
             // JWT 발급
             ObjectMapper mapper = new ObjectMapper();

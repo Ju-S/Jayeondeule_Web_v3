@@ -7,7 +7,6 @@ import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +16,7 @@ import java.util.List;
 
 //회원가입, 로그인 등 사용자 관련 API 엔드포인트
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -43,7 +42,7 @@ public class UserController {
     }
 
     //아이디 중복 확인
-    @GetMapping("/id-dupl-check/{userId}")
+    @GetMapping("/id-dupl-check")
     public ResponseEntity<Boolean> idDuplicationCheck(@RequestParam String userId) {
         return ResponseEntity.ok(userService.idDuplicationCheck(userId));
     }

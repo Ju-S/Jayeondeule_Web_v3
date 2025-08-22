@@ -1,9 +1,12 @@
 import api from "../common/jwtUtil.js";
+import apiRoutes from "../common/apiRoutes.js";
 
 export async function registerUser(userInfo) {
-    return api.post("http://localhost:8088/api/users", userInfo);
+    const { url, method } = apiRoutes.users.register;
+    return api({url, method, data: userInfo});
 }
 
 export async function idDuplCheck(userId) {
-    return api.get("http://localhost:8088/api", userId);
+    const { url, method } = apiRoutes.users.checkUserId(userId);
+    return api({url, method});
 }

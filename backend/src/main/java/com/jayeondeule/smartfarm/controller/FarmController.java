@@ -4,6 +4,7 @@ import com.jayeondeule.smartfarm.dto.farm.FarmDTO;
 import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
 import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
+import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.service.FarmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,11 @@ public class FarmController {
     @PostMapping
     public void insertFarm(@RequestBody FarmInsertDTO insertInfo,
                            @AuthenticationPrincipal UserDTO userInfo) {
-
+        if(userInfo != null) {
+            if(userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+                farmService.insertFarm(insertInfo);
+            }
+        }
     }
 
     //농장 리스트

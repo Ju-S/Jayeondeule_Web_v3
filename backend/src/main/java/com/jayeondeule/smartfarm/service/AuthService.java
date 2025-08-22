@@ -3,7 +3,7 @@ package com.jayeondeule.smartfarm.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jayeondeule.smartfarm.dto.auth.LoginDTO;
-import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
+import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.entity.user.User;
 import com.jayeondeule.smartfarm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     //로그인
-    public UserPatchDTO login(LoginDTO loginInfo) {
+    public UserDTO login(LoginDTO loginInfo) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         User find = userRepository.findByUserId(loginInfo.getUserId());
@@ -31,6 +31,6 @@ public class AuthService {
             throw new RuntimeException("Invalid password");
         }
 
-        return mapper.convertValue(find, UserPatchDTO.class);
+        return mapper.convertValue(find, UserDTO.class);
     }
 }

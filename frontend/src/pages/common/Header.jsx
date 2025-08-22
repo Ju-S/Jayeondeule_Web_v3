@@ -19,7 +19,7 @@ export default function Header() {
                             {auth.userInfo.authLvel === "ADMIN" && (
                                 <AdminNavLink/>
                             )}
-                            <CommonNavLink/>
+                            <CommonNavLink userName={auth.userInfo.userName}/>
                         </>
                     ) : (
                         <>

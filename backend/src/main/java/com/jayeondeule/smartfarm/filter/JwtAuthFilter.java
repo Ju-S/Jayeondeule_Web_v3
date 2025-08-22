@@ -9,13 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -28,10 +29,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException, java.io.IOException {
 
         String path = request.getRequestURI();
+        String method = request.getMethod();
         String header = request.getHeader("Authorization");
 
-        if (Arrays.stream(WhiteList.values())
-                .anyMatch(w -> w.name().equals(path))) {
+        if (WhiteList.contains(path, method)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -41,6 +42,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             try {
                 // JWT에서 Map 형태의 사용자 정보 추출
                 UserDTO userInfo = jwtUtil.getUserInfo(token);
+
+                System.out.println(userInfo.getAuthLvel());
+                System.out.println(token);
 
                 // Authentication 객체 생성
                 UsernamePasswordAuthenticationToken auth =

@@ -1,8 +1,11 @@
 package com.jayeondeule.smartfarm.entity.farm;
 
+import com.jayeondeule.smartfarm.converter.ProductConverter;
+import com.jayeondeule.smartfarm.enums.farm.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -30,10 +33,10 @@ public class Farm {
     private String farmDomi; // 농장 도메인
 
     @Column(nullable = false)
-    private LocalDateTime openDate; // 개업일자
+    private LocalDate openDate; // 개업일자
 
     @Column
-    private LocalDateTime closeDate; // 폐업일자 (선택적)
+    private LocalDate closeDate; // 폐업일자 (선택적)
 
     @Column
     private String telNo; // 대표번호
@@ -60,7 +63,8 @@ public class Farm {
     private String addr; // 주소
 
     @Column
-    private int mainPrdt; // 주요 작물
+    @Convert(converter = ProductConverter.class)
+    private Product mainPrdt; // 주요 작물
 
     @Column(columnDefinition = "TEXT")
     private String rmks; // 농장 설명

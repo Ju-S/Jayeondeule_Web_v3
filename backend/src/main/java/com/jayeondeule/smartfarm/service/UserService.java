@@ -22,13 +22,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ObjectMapper mapper;
 
     //회원가입
     public boolean insertUser(UserInsertDTO signupInfo) {
         String hashed = passwordEncoder.encode(signupInfo.getPasswd());
         signupInfo.setPasswd(hashed);
 
-        ObjectMapper mapper = new ObjectMapper();
         userRepository.save(mapper.convertValue(signupInfo, User.class));
 
         return true;
@@ -40,8 +40,6 @@ public class UserService {
     }
 
     public List<UserDTO> getUsers() {
-        ObjectMapper mapper = new ObjectMapper();
-
         List<UserDTO> result = userRepository.findAll().stream()
                 .map(user -> mapper.convertValue(user, UserDTO.class))
                 .toList();

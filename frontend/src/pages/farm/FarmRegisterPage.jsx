@@ -3,8 +3,13 @@ import {Button, Card, Container, Form} from "react-bootstrap";
 import LabeledInput from "../../components/form/LabeledInput.jsx";
 import LabeledAddress from "../../components/form/LabeledAddress.jsx";
 import LabeledSelect from "../../components/form/LabeledSelect.jsx";
+import LabeledPhoneInput from "../../components/form/LabeledPhoneInput.jsx";
+import {registerFarm} from "../../utils/farm/farmUtil.js";
+import {useNavigate} from "react-router-dom";
 
 export default function FarmRegisterPage() {
+    const navigate = useNavigate();
+
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
@@ -37,15 +42,16 @@ export default function FarmRegisterPage() {
             oncomplete: function (data) {
                 setForm((state) => ({
                     ...state,
-                    address: data.address,
+                    addr: data.address,
                 }));
             },
         }).open();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("농장 등록 정보:", form);
+        await registerFarm(form);
+        navigate("/farm-management");
     };
 
     return (
@@ -60,6 +66,9 @@ export default function FarmRegisterPage() {
                         value={form.farmName}
                         onChange={handleChange}
                         placeholder="농장 이름 입력"
+                        pattern="^[가-힣a-zA-Z0-9]{2,20}$"
+                        errorMsg="한글, 영문, 숫자로 이루어진 2~20자로 입력해주세요."
+                        required={true}
                     />
                     <LabeledInput
                         label="농장 도메인"
@@ -67,6 +76,9 @@ export default function FarmRegisterPage() {
                         value={form.farmDomi}
                         onChange={handleChange}
                         placeholder="농장 도메인 입력"
+                        pattern="^[a-zA-Z0-9.]*$"
+                        errorMsg="영문, 숫자로 입력해주세요."
+                        required={true}
                     />
                     <LabeledInput
                         label="개업일자"
@@ -74,27 +86,28 @@ export default function FarmRegisterPage() {
                         name="openDate"
                         value={form.openDate}
                         onChange={handleChange}
+                        required={true}
                     />
-                    <LabeledInput
+                    <LabeledPhoneInput
                         label="대표번호"
                         name="telNo"
                         value={form.telNo}
                         onChange={handleChange}
-                        placeholder="대표번호 입력"
+                        required={true}
                     />
-                    <LabeledInput
+                    <LabeledPhoneInput
                         label="전화번호"
                         name="hpNo"
                         value={form.hpNo}
+                        placeholder="063-1234-5678"
                         onChange={handleChange}
-                        placeholder="전화번호 입력"
                     />
-                    <LabeledInput
+                    <LabeledPhoneInput
                         label="팩스번호"
                         name="faxNo"
                         value={form.faxNo}
+                        placeholder="063-1234-5678"
                         onChange={handleChange}
-                        placeholder="팩스번호 입력"
                     />
                     <LabeledInput
                         label="대표메일"
@@ -110,6 +123,7 @@ export default function FarmRegisterPage() {
                         value={form.ipAddr}
                         onChange={handleChange}
                         placeholder="농장 IP 입력"
+                        required={true}
                     />
                     <LabeledInput
                         label="농장 포트"
@@ -117,23 +131,28 @@ export default function FarmRegisterPage() {
                         value={form.port}
                         onChange={handleChange}
                         placeholder="농장 포트 입력"
+                        pattern="^[0-9]{2,5}$"
+                        errorMsg="숫자 2~5자로 입력해주세요."
+                        required={true}
                     />
                     <LabeledAddress
                         label="주소"
-                        name="address"
-                        value={form.address}
+                        name="addr"
+                        value={form.addr}
                         onChange={handleChange}
                         onSearch={handleAddressSearch}
+                        required={true}
                     />
                     <LabeledSelect
                         label="주요 작물"
                         name="mainPrdt"
                         placeholder="주요 작물 선택"
                         option={[
-                            { value: "1", label: "상황버섯"},
+                            { value: "10", label: "상황버섯"},
                         ]}
                         value={form.mainPrdt}
                         onChange={handleChange}
+                        required={true}
                     />
                     <LabeledInput
                         label="농장 설명"

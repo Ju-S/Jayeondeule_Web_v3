@@ -43,7 +43,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
                                 .access(new WebExpressionAuthorizationManager(swaggerBeanUtility.ip()))
-                                .requestMatchers("/error", "/serverTime").permitAll()
                                 .requestMatchers(Arrays.stream(WhiteList.values())
                                         .map(WhiteList::getPath)
                                         .toArray(String[]::new)

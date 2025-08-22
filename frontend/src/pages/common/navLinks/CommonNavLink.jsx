@@ -1,10 +1,10 @@
 import React from "react";
-import {Nav} from "react-bootstrap";
+import {Nav, NavDropdown} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {logout} from "../../../store/auth/authSlice.js";
 
-export default function CommonNavLink() {
+export default function CommonNavLink({userName}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -20,7 +20,11 @@ export default function CommonNavLink() {
 
     return (
         <>
-            <Nav.Link onClick={handleLogout}>로그아웃</Nav.Link>
+            <NavDropdown title={userName} id="basic-nav-dropdown" align="end">
+                <NavDropdown.Item as={Link} to="/farm-management">정보수정</NavDropdown.Item>
+                <NavDropdown.Divider/>
+                <NavDropdown.Item onClick={handleLogout}>로그아웃</NavDropdown.Item>
+            </NavDropdown>
         </>
     )
 }
