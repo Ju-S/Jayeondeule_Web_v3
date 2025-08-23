@@ -1,6 +1,7 @@
 package com.jayeondeule.smartfarm.controller;
 
 import com.jayeondeule.smartfarm.dto.relay.RelayDTO;
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.service.RelayService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class RelayController {
     @GetMapping
     public ResponseEntity<RelayDTO> getRelay(@PathVariable Long farmId,
                                              @PathVariable Long houseId,
-                                             @AuthenticationPrincipal UserDTO userInfo) {
+                                             @AuthenticationPrincipal UserClaimDTO userInfo) {
         return null;
     }
 
@@ -28,7 +29,7 @@ public class RelayController {
     public void patchRelay(@RequestBody RelayDTO relayInfo,
                                               @PathVariable Long farmId,
                                               @PathVariable Long houseId,
-                                              @AuthenticationPrincipal UserDTO userInfo) {
+                                              @AuthenticationPrincipal UserClaimDTO userInfo) {
 
     }
 }

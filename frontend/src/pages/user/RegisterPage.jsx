@@ -1,7 +1,7 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Form, Button, Card, Container, InputGroup} from "react-bootstrap";
 import LabeledInput from "../../components/form/LabeledInput";
-import {idDuplCheck, registerUser} from "../../utils/user/userUtil.js";
+import {idDuplCheck, registerUser} from "../../utils/userUtil.js";
 import {useNavigate} from "react-router-dom";
 import RegisterIdInput from "../../components/user/register/RegisterIdInput.jsx";
 import LabeledPhoneInput from "../../components/form/LabeledPhoneInput.jsx";
@@ -12,7 +12,7 @@ function RegisterPage() {
     const [form, setForm] = useState({
         userId: "",
         passwd: "",
-        email: "",
+        pstn: "",
         userName: "",
         hpNo: "",
     });
@@ -73,7 +73,7 @@ function RegisterPage() {
                         onChange={formHandleChange}
                         onClick={handleCheck}
                         isAvailable={isDuplicate}
-                        required={true}
+                        required
                     />
 
                     <LabeledInput
@@ -85,7 +85,7 @@ function RegisterPage() {
                         placeholder="비밀번호 입력"
                         pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,30}$"
                         errorMsg="영문, 숫자, 특수문자가 1개 이상 들어간 8~30자로 입력해주세요."
-                        required={true}
+                        required
                         // 8-30자, 영문+숫자+특수문자 포함
                     />
                     <LabeledInput
@@ -97,7 +97,7 @@ function RegisterPage() {
                         placeholder="비밀번호 확인"
                         pattern={form.passwd}
                         errorMsg="입력된 비밀번호와 다릅니다."
-                        required={true}
+                        required
                         // confirm는 폼 검증 외에도 handleSubmit에서 직접 체크 필요
                     />
                     <LabeledInput
@@ -108,7 +108,7 @@ function RegisterPage() {
                         placeholder="이름 입력"
                         pattern="^[가-힣a-zA-Z]{2,20}$"
                         errorMsg="한글, 영문으로 이루어진 2~20자로 입력해주세요."
-                        required={true}
+                        required
                         // 한글/영문, 2~20자
                     />
                     <LabeledPhoneInput
@@ -116,18 +116,17 @@ function RegisterPage() {
                         name="hpNo"
                         value={form.hpNo}
                         onChange={formHandleChange}
-                        required={true}
+                        required
                     />
                     <LabeledInput
-                        label="이메일"
-                        type="email"
-                        name="email"
-                        value={form.email}
+                        label="직위"
+                        name="pstn"
+                        value={form.pstn}
                         onChange={formHandleChange}
-                        placeholder="이메일 입력"
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                        errorMsg="이메일 형식으로 입력해주세요.(example@example.com)"
-                        required={true}
+                        placeholder="직위 입력"
+                        pattern="^[a-zA-Z가-힣]*$"
+                        errorMsg="한글, 영문으로 입력해주세요."
+                        required
                         // 일반 이메일 패턴
                     />
 

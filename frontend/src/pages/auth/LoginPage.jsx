@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Form, Button, Card, Container, Alert} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import LabeledInput from "../../components/form/LabeledInput.jsx";
-import {loginUser} from "../../utils/auth/authUtil.js";
+import {loginUser} from "../../utils/authUtil.js";
 import {useNavigate} from "react-router-dom";
 import {loginSuccess} from "../../store/auth/authSlice.js";
 
@@ -52,7 +52,7 @@ export default function LoginPage() {
                                 placeholder="아이디 입력"
                                 onChange={handleChange}
                                 value={loginInfo.userId}
-                                required={true}
+                                required
                             />
 
                             <LabeledInput
@@ -63,7 +63,7 @@ export default function LoginPage() {
                                 placeholder="비밀번호 입력"
                                 onChange={handleChange}
                                 value={loginInfo.passwd}
-                                required={true}
+                                required
                             />
 
                             <Button variant="success" type="submit" className="w-100">

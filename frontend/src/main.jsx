@@ -7,9 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <Provider store={store}>
             <App />
         </Provider>
-    </React.StrictMode>
+    // </React.StrictMode>
 );

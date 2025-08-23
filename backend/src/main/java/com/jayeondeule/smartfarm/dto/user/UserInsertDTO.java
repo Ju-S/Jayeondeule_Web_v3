@@ -11,6 +11,6 @@ public class UserInsertDTO {
     private String userId; // 아이디
     private String passwd; // 비밀번호 (암호화 필요)
     private String userName; // 이름
-    private String email; // 이메일
+    private String pstn; // 직위
     private String hpNo; // 전화번호
 }

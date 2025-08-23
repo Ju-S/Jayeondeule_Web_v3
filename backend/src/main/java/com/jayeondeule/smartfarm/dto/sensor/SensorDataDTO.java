@@ -1,13 +1,12 @@
 package com.jayeondeule.smartfarm.dto.sensor;
 
-import com.jayeondeule.smartfarm.entity.house.FarmHouse;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class SensorDataDTO {
     private LocalDateTime recdDttm; // 측정일자
 
@@ -17,6 +16,6 @@ public class SensorDataDTO {
     private double oudrHmdtValu; // 외부 습도
     private double co2Valu; // 실내 co2
     private double watrTprtValu; // 수온
-    private boolean lightLvelValu; // 조명 작동 상태
-    private boolean watrLvelValu; // 관수 작동 상태
+    private double lightLvelValu; // 조명 작동 상태
+    private double watrLvelValu; // 관수 작동 상태
 }

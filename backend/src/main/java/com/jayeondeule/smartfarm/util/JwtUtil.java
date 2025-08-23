@@ -1,5 +1,6 @@
 package com.jayeondeule.smartfarm.util;
 
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import io.jsonwebtoken.Jwts;
@@ -43,15 +44,12 @@ public class JwtUtil {
     }
 
     // 사용자 정보 복원
-    public UserDTO getUserInfo(String token) {
+    public UserClaimDTO getUserInfo(String token) {
         Claims claims = getClaims(token);
 
-        return UserDTO.builder()
+        return UserClaimDTO.builder()
                 .userId(claims.get("userId").toString())
-                .userName(claims.get("userName").toString())
-                .email(claims.get("email").toString())
                 .authLvel(AuthLvel.valueOf(claims.get("authLvel").toString()))
-                .hpNo(claims.get("hpNo").toString())
                 .build();
     }
 }

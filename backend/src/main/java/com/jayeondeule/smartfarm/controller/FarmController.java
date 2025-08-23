@@ -2,11 +2,12 @@ package com.jayeondeule.smartfarm.controller;
 
 import com.jayeondeule.smartfarm.dto.farm.FarmDTO;
 import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
-import com.jayeondeule.smartfarm.dto.user.UserDTO;
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
 import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.service.FarmService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class FarmController {
     //농장 등록
     @PostMapping
     public void insertFarm(@RequestBody FarmInsertDTO insertInfo,
-                           @AuthenticationPrincipal UserDTO userInfo) {
+                           @AuthenticationPrincipal UserClaimDTO userInfo) {
         if(userInfo != null) {
             if(userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
                 farmService.insertFarm(insertInfo);
@@ -33,8 +34,18 @@ public class FarmController {
 
     //농장 리스트
     @GetMapping
-    public ResponseEntity<List<FarmDTO>> getFarmList(@AuthenticationPrincipal UserDTO userInfo) {
+    public ResponseEntity<Page<FarmDTO>> getFarmList(
+            @AuthenticationPrincipal UserClaimDTO userInfo,
+            @RequestParam int page,
+            @RequestParam int size) {
         //jwt에서 userInfo를 조회해서 권한확인 후 분기
+        if(userInfo != null) {
+            if(userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+                return ResponseEntity.ok(farmService.getAllFarms(page, size));
+            } else {
+                return ResponseEntity.ok(farmService.getFarmsByUserId(page, size, userInfo.getUserId()));
+            }
+        }
         return null;
     }
 
@@ -42,7 +53,7 @@ public class FarmController {
     @PatchMapping("/{farmId}")
     public void patchFarm(@RequestBody UserPatchDTO modifiedInfo,
                           @PathVariable Long farmId,
-                          @AuthenticationPrincipal UserDTO userInfo
+                          @AuthenticationPrincipal UserClaimDTO userInfo
     ) {
 
     }
@@ -50,7 +61,7 @@ public class FarmController {
     //농장 삭제
     @DeleteMapping("/{farmId}")
     public void deleteFarm(@PathVariable Long farmId,
-                           @AuthenticationPrincipal UserDTO userInfo) {
+                           @AuthenticationPrincipal UserClaimDTO userInfo) {
 
     }
 }

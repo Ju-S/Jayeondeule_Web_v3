@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO {
-    //사용자 정보 전송 객체
+public class UserClaimDTO {
+    //JWT에 저장될 사용자 정보 객체
     private String userId; // 아이디
-    private String userName; // 이름
-    private String pstn; // 직위
     private AuthLvel authLvel; // 권한 (ADMIN, USER 등)
-    private String hpNo; // 전화번호
 }

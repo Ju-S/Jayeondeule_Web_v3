@@ -1,7 +1,7 @@
 package com.jayeondeule.smartfarm.filter;
 
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.enums.security.WhiteList;
-import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.util.JwtUtil;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
@@ -41,10 +41,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             try {
                 // JWT에서 Map 형태의 사용자 정보 추출
-                UserDTO userInfo = jwtUtil.getUserInfo(token);
-
-                System.out.println(userInfo.getAuthLvel());
-                System.out.println(token);
+                UserClaimDTO userInfo = jwtUtil.getUserInfo(token);
 
                 // Authentication 객체 생성
                 UsernamePasswordAuthenticationToken auth =

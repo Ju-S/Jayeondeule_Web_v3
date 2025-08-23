@@ -1,5 +1,5 @@
-import api from "../common/jwtUtil.js";
-import apiRoutes from "../common/apiRoutes.js";
+import api from "./jwtUtil.js";
+import apiRoutes from "./apiRoutes.js";
 
 export async function loginUser(loginInfo) {
     const {url, method} = apiRoutes.auth.login;

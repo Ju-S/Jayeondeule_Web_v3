@@ -3,7 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import PrivateRoute from "../pages/common/route/PrivateRoute.jsx";
 import FarmManagementPage from "../pages/farm/FarmManagementPage.jsx";
 import FarmRegisterPage from "../pages/farm/FarmRegisterPage.jsx";
-import ErrorPage from "../pages/common/ErrorPage.jsx";
+import CommonRoutes from "./CommonRoutes.jsx";
 
 export default function AdminRoutes() {
     return ( //"/assign-farm-roles"
@@ -29,7 +29,7 @@ export default function AdminRoutes() {
                     </PrivateRoute>
                 }
             />
-            <Route path="*" element={<ErrorPage/>}/>
+            <Route path="*" element={<CommonRoutes/>}/>
         </Routes>
     )
 }

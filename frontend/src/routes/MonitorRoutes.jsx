@@ -3,15 +3,14 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import PrivateRoute from "../pages/common/route/PrivateRoute.jsx";
 import FarmManagementPage from "../pages/farm/FarmManagementPage.jsx";
 import FarmRegisterPage from "../pages/farm/FarmRegisterPage.jsx";
-import ErrorPage from "../pages/common/ErrorPage.jsx";
+import CommonRoutes from "./CommonRoutes.jsx";
 
 export default function MonitorRoutes() {
     return (
         <Routes>
             <Route
                 path="/"
-                element={<Navigate to="/farm-management" replace/>
-                }
+                element={<Navigate to="/farm-management" replace/>}
             />
             <Route
                 path="/farm-management"
@@ -29,7 +28,7 @@ export default function MonitorRoutes() {
                     </PrivateRoute>
                 }
             />
-            <Route path="*" element={<ErrorPage/>}/>
+            <Route path="*" element={<CommonRoutes/>}/>
         </Routes>
     )
 }

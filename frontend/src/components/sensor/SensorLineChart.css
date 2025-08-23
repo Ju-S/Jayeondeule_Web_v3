@@ -1,0 +1,4 @@
+/* LineChart 클릭/포커스 시 생기는 검은 테두리 제거 */
+svg:focus {
+    outline: none;
+}

@@ -3,7 +3,7 @@ package com.jayeondeule.smartfarm.controller;
 import com.jayeondeule.smartfarm.dto.setting.LightIrrigationSettingPatchDTO;
 import com.jayeondeule.smartfarm.dto.setting.SettingDTO;
 import com.jayeondeule.smartfarm.dto.setting.SettingInsertDTO;
-import com.jayeondeule.smartfarm.dto.user.UserDTO;
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class SettingController {
     public void insertSettings(@RequestBody SettingInsertDTO settingInfo,
                                                   @PathVariable Long farmId,
                                                   @PathVariable Long houseId,
-                                                  @AuthenticationPrincipal UserDTO userInfo) {
+                                                  @AuthenticationPrincipal UserClaimDTO userInfo) {
 
     }
 
@@ -34,7 +34,7 @@ public class SettingController {
     @GetMapping
     public ResponseEntity<SettingDTO> getSettings(@PathVariable Long farmId,
                                                   @PathVariable Long houseId,
-                                                  @AuthenticationPrincipal UserDTO userInfo) {
+                                                  @AuthenticationPrincipal UserClaimDTO userInfo) {
         //houseId의 farmId가 userInfo의 farmId에 있는지 확인
         return null;
     }
@@ -45,7 +45,7 @@ public class SettingController {
                                                                @PathVariable Long farmId,
                                                                @PathVariable Long houseId,
                                                                @PathVariable LocalDateTime setDttm,
-                                                               @AuthenticationPrincipal UserDTO userInfo) {
+                                                               @AuthenticationPrincipal UserClaimDTO userInfo) {
         //lightIrrigationSetting의 houseId의 farmId가 userInfo의 farmId에 있는지 확인
     }
 }

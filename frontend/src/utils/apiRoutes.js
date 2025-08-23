@@ -6,14 +6,14 @@ const apiRoutes = {
          * 로그인 API<br>
          * POST /api/auth<br>
          * body: { userId, passwd }<br>
-         * response: {UserInfoDTO} + 토큰(JWT)
+         * response: {UserClaimDTO} + 토큰(JWT)
          */
         login: {url: `${BASE_URL}/auth`, method: "POST"},
 
         /**
-         * 사용자 정보 API<br>
+         * 사용자 토큰 정보 조회 API<br>
          * GET /api/auth
-         * response: {UserInfoDTO}
+         * response: {UserClaimDTO}
          */
         getUser: {url: `${BASE_URL}/auth`, method: "GET"},
     },
@@ -34,20 +34,46 @@ const apiRoutes = {
         register: {url: `${BASE_URL}/users`, method: "POST"},
 
         /**
-         * 특정 사용자 관리 API<br>
-         * GET/PATCH/DELETE /api/users<br>
-         * pathVariable: {userId}
+         * 현재 사용자 정보 조회 API<br>
+         * GET /api/user/me<br>
+         * response: {UserDTO}
          */
-        management: (userId) => `${BASE_URL}/users/${userId}`
+        me: {url: `${BASE_URL}/users/me`, method: "GET"},
+
+        /**
+         * 사용자 정보 목록 조회 API(관리자용)<br>
+         * GET /api/user<br>
+         * response: {List<UserDTO>}
+         */
+        getList: {url: `${BASE_URL}/users`, method: "GET"},
+
+        /**
+         * 사용자 정보 수정 API<br>
+         * PATCH /api/users<br>
+         * body: {UserPatchDTO}
+         */
+        patch: {url: `${BASE_URL}/users`, method: "PATCH"},
+
+        /**
+         * 비밀번호 변경 API<br>
+         * PATCH /api/users/password<br>
+         * body: {UserPasswordPatchDTO}<br>
+         * response: {errorMessage: message}
+         */
+        passwordChange: {url: `${BASE_URL}/users/password`, method: "PATCH"},
     },
     farms: {
         /**
          * 소유 농장 목록 조회 API<br>
          * GET /api/farms<br>
-         * pathVariable: {userId}<br>
-         * response: {List<FarmDTO>}
+         * response:<br>
+         * 일반 사용자 - {FarmDTO}<br>
+         * 관리자 - {List<FarmDTO>}
          */
-        list: (userId) => ({url: `${BASE_URL}/farms/${userId}`, method: "GET"}),
+        getFarm: (page = 0, size = 20) => ({
+            url: `${BASE_URL}/farms?page=${page}&size=${size}`,
+            method: "GET"
+        }),
 
         /**
          * 농장 등록 API<br>
@@ -149,8 +175,8 @@ const apiRoutes = {
          * param: {limits}<br>
          * response: {SensorDataDTO}
          */
-        list: (farmId, houseId, limits="") => ({
-            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/sensors?limits=${limits}`,
+        list: (farmId, houseId, start, end) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/sensors?start=${start}&end=${end}`,
             method: "GET"
         }),
     },

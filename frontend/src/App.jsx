@@ -5,7 +5,7 @@ import {BrowserRouter} from "react-router-dom";
 import Header from "./pages/common/Header.jsx";
 import Footer from "./pages/common/Footer.jsx";
 import {setUser} from "./store/auth/authSlice.js";
-import {authUser} from "./utils/auth/authUtil.js";
+import {authUser} from "./utils/authUtil.js";
 import AdminRoutes from "./routes/AdminRoutes.jsx";
 import LoadingPage from "./pages/common/LoadingPage.jsx";
 import GuestRoutes from "./routes/GuestRoutes.jsx";
@@ -48,12 +48,12 @@ export default function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header/>
 
-                <div className="flex-grow-1">
+                <div className="flex-grow-1 mt-5 overflow-hidden">
                     {!auth.token ? (
                         <GuestRoutes/>
                     ) : auth.userInfo.authLvel === "ADMIN" ? (
                         <AdminRoutes/>
-                    ) : auth.userInfo.authLvel === "FARM_ADMIN" ?(
+                    ) : auth.userInfo.authLvel === "FARM_ADMIN" ? (
                         <FarmAdminRoutes/>
                     ) : (
                         <MonitorRoutes/>

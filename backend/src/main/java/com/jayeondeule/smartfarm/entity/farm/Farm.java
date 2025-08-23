@@ -26,10 +26,10 @@ public class Farm {
     )
     private long farmId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String farmName; // 농장 이름
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String farmDomi; // 농장 도메인
 
     @Column(nullable = false)

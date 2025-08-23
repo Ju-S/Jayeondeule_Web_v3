@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class UserPatchDTO {
     //사용자 수정 정보 전송 객체
     private String userName; // 이름
-    private String email; // 이메일
+    private String pstn; // 직위
     private String hpNo; // 전화번호
 }

@@ -3,6 +3,7 @@ package com.jayeondeule.smartfarm.controller;
 import com.jayeondeule.smartfarm.dto.memo.FarmHouseCropsDTO;
 import com.jayeondeule.smartfarm.dto.memo.FarmHouseCropsInsertDTO;
 import com.jayeondeule.smartfarm.dto.memo.FarmHouseCropsPatchDTO;
+import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import com.jayeondeule.smartfarm.entity.memo.FarmHouseCropsId;
 import com.jayeondeule.smartfarm.service.MemoService;
@@ -26,7 +27,7 @@ public class MemoController {
     public void insertMemo(@RequestBody FarmHouseCropsInsertDTO insertInfo,
                            @PathVariable Long farmId,
                            @PathVariable Long houseId,
-                           @AuthenticationPrincipal UserDTO userInfo) {
+                           @AuthenticationPrincipal UserClaimDTO userInfo) {
 
     }
 
@@ -34,7 +35,7 @@ public class MemoController {
     @GetMapping
     public ResponseEntity<List<FarmHouseCropsDTO>> getMemo(@PathVariable Long farmId,
                                                            @PathVariable Long houseId,
-                                                           @AuthenticationPrincipal UserDTO userInfo) {
+                                                           @AuthenticationPrincipal UserClaimDTO userInfo) {
         return null;
     }
 
@@ -44,7 +45,7 @@ public class MemoController {
                           @PathVariable Long farmId,
                           @PathVariable Long houseId,
                           @PathVariable LocalDateTime recdDttm,
-                          @AuthenticationPrincipal UserDTO userInfo) {
+                          @AuthenticationPrincipal UserClaimDTO userInfo) {
         FarmHouseCropsId id = new FarmHouseCropsId();
     }
 
@@ -53,7 +54,7 @@ public class MemoController {
     public void deleteMemo(@PathVariable Long farmId,
                            @PathVariable Long houseId,
                            @PathVariable LocalDateTime recdDttm,
-                           @AuthenticationPrincipal UserDTO userInfo) {
+                           @AuthenticationPrincipal UserClaimDTO userInfo) {
 
     }
 }

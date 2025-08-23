@@ -1,5 +1,6 @@
 package com.jayeondeule.smartfarm.entity.user;
 
+import com.jayeondeule.smartfarm.converter.AuthLvelConverter;
 import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.entity.farm.Farm;
 import jakarta.persistence.*;
@@ -25,10 +26,10 @@ public class User {
     private String userName; // 이름
 
     @Column
-    private String email; // 이메일
+    private String pstn; // 직위
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AuthLvelConverter.class)
     private AuthLvel authLvel = AuthLvel.MONITOR; // 권한 (ADMIN, FARM_ADMIN, HOUS_MANAGER, MONITOR)
 
     @Column
@@ -36,4 +37,25 @@ public class User {
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
     private LocalDateTime rgstDttm = LocalDateTime.now(); // 가입일자
+
+    //비밀번호 변경 용도
+    public void changePassword(String newPassword) {
+        this.passwd = newPassword;
+    }
+
+    //사용자 정보 수정용
+    public void changeUserName(String newUserName) {
+        this.userName = newUserName;
+    }
+    public void changeUserHpNo(String newHpNo) {
+        this.hpNo = newHpNo;
+    }
+    public void changeUserPstn(String newPstn) {
+        this.pstn = newPstn;
+    }
+
+    //사용자 권한 수정용
+    public void changeUserAuthLvel(AuthLvel newAuthLvel) {
+        this.authLvel = newAuthLvel;
+    }
 }

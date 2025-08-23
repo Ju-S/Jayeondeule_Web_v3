@@ -29,6 +29,7 @@ export default function LabeledInput({label, name, smLabel = 2, errorMsg, value,
                     name={name}
                     value={value}
                     required={required}
+                    pattern={pattern}
                     {...props}
                 />
                 {error && <Form.Text className="text-danger">{error}</Form.Text>}

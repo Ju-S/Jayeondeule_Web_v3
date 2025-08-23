@@ -4,7 +4,10 @@ import com.jayeondeule.smartfarm.entity.sensor.SensorRecording;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Repository
 public interface SensorRecordingRepository extends JpaRepository<SensorRecording, Long> {
-    //센서 데이터 접근 인터페이스
+    List<SensorRecording> findByFarmIdAndHousIdAndRecdDttmBetween(long farmId, long housId, LocalDateTime recdDttmAfter, LocalDateTime recdDttmBefore);
 }
