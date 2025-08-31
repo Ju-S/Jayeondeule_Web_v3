@@ -5,14 +5,14 @@ import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 //회원가입, 로그인 등 사용자 관련 API 엔드포인트
 @RestController
@@ -29,11 +29,18 @@ public class UserController {
 
     //아이디 회원정보 리스트 조회
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers(@AuthenticationPrincipal UserClaimDTO userInfo) {
+    public ResponseEntity<Page<UserDTO>> getUsers(@AuthenticationPrincipal UserClaimDTO userInfo,
+                                                  @RequestParam int page,
+                                                  @RequestParam int size,
+                                                  @RequestParam long searchQuery) {
         // admin일 경우에만 반환
         if (userInfo != null) {
             if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
-                return ResponseEntity.ok(userService.getUsers());
+                if(searchQuery == -1) {
+                    return ResponseEntity.ok(userService.getUsers(page, size));
+                } else {
+                    return ResponseEntity.ok(userService.getUsers(page, size, searchQuery));
+                }
             }
         }
         return ResponseEntity
@@ -43,7 +50,7 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getUser(@AuthenticationPrincipal UserClaimDTO userInfo) {
-        if(userInfo != null) {
+        if (userInfo != null) {
             return ResponseEntity.ok(userService.getUser(userInfo.getUserId()));
         }
         return ResponseEntity
@@ -63,6 +70,18 @@ public class UserController {
                           @RequestBody @Valid UserPatchDTO modifiedInfo) {
         if (userInfo != null) {
             userService.patchUser(modifiedInfo, userInfo.getUserId());
+        }
+    }
+
+    //회원 농장 접근 권한 부여
+    @PatchMapping("/{userId}")
+    public void patchUserFarmId(@AuthenticationPrincipal UserClaimDTO userInfo,
+                                @PathVariable String userId,
+                                @RequestBody @Valid UserFarmIdPatchDTO modifiedInfo) {
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+                userService.patchUserFarmId(modifiedInfo, userId);
+            }
         }
     }
 

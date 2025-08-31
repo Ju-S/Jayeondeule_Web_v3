@@ -63,6 +63,10 @@ public class HouseService {
 
             target.setHousName(modifiedInfo.getHousName());
             target.setCropKind(modifiedInfo.getCropKind());
+            target.setLastGetDttm(modifiedInfo.getLastGetDttm());
+            target.setRfrsFlag(modifiedInfo.isRfrsFlag());
+            target.setSnsrRfrsItvl(modifiedInfo.getSnsrRfrsItvl());
+            target.setMnulCtrlFlag(modifiedInfo.isMnulCtrlFlag());
 
             farmHouseRepository.save(target);
         }

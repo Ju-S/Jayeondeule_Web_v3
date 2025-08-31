@@ -7,12 +7,11 @@ import {
     Col,
     Spinner,
     InputGroup,
-    Dropdown, Button
+    Dropdown,
 } from "react-bootstrap";
-import apiRoutes from "../../utils/apiRoutes.js";
-import api from "../../utils/jwtUtil.js";
 import {useNavigate} from "react-router-dom";
 import TruncatedOverlayTrigger from "../../components/farm/TruncatedOverlayTrigger.jsx";
+import {getFarmList} from "../../utils/farmUtil.js";
 
 export default function FarmManagementPage() {
     const navigate = useNavigate();
@@ -28,7 +27,7 @@ export default function FarmManagementPage() {
         if (loading) return;
         setLoading(true);
         try {
-            const res = await api(apiRoutes.farms.getFarmList(page, 20));
+            const res = await getFarmList(page, 20);
             const newFarms = res.data.content || [];
 
             // 중복 제거
@@ -66,14 +65,6 @@ export default function FarmManagementPage() {
     const filteredFarms = farms.filter(farm =>
         farm[searchField]?.toLowerCase().includes(search.toLowerCase())
     );
-
-    // 공통 td 스타일
-    const truncateStyle = {
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        verticalAlign: "middle",
-    };
 
     return (
         <Container className="mt-2 pt-3">

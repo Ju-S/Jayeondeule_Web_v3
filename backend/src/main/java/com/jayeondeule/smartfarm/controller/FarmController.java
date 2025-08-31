@@ -4,7 +4,6 @@ import com.jayeondeule.smartfarm.dto.farm.FarmDTO;
 import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
 import com.jayeondeule.smartfarm.dto.farm.FarmPatchDTO;
 import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
-import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
 import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.service.FarmService;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +60,8 @@ public class FarmController {
     public ResponseEntity<FarmDTO> getFarm(@PathVariable Long farmId,
                                            @AuthenticationPrincipal UserClaimDTO userInfo) {
         if (userInfo != null) {
-            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
+                    farmService.getFarmByUserId(userInfo.getUserId()).getFarmId() == farmId) {
                 return ResponseEntity.ok(farmService.getFarmByFarmId(farmId));
             }
         }

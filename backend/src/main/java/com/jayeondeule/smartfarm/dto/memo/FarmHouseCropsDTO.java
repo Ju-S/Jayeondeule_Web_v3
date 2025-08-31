@@ -30,7 +30,8 @@ public class FarmHouseCropsDTO {
     private int cropGradeAmut4 = 0;
     private int cropGradeAmut5 = 0;
 
-    private String athr; // 작성자
+    private String athr; // 작성자 아이디
+    private String athrName; // 작성자 이름
     private String rmks; // 메모
 
     private String orgn; // 업로드 이미지 파일명

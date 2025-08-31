@@ -45,7 +45,10 @@ const apiRoutes = {
          * GET /api/user<br>
          * response: {List<UserDTO>}
          */
-        getList: {url: `${BASE_URL}/users`, method: "GET"},
+        getList: (page, size, searchQuery=-1) => ({
+            url: `${BASE_URL}/users?page=${page}&size=${size}&searchQuery=${searchQuery}`,
+            method: "GET"
+        }),
 
         /**
          * 사용자 정보 수정 API<br>
@@ -53,6 +56,16 @@ const apiRoutes = {
          * body: {UserPatchDTO}
          */
         patch: {url: `${BASE_URL}/users`, method: "PATCH"},
+
+        /**
+         * 사용자 농장 접근권한 부여 API<br>
+         * PATCH /api/users/{userId}<br>
+         * body: {UserFarmIdPatchDTO}
+         */
+        patchFarmId: (userId) => ({
+            url: `${BASE_URL}/users/${userId}`,
+            method: "PATCH"
+        }),
 
         /**
          * 비밀번호 변경 API<br>
@@ -177,8 +190,8 @@ const apiRoutes = {
          * pathVariable: {farmId, houseId}<br>
          * response: {List<MemoDTO>}
          */
-        list: (farmId, houseId) => ({
-            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos`,
+        list: (farmId, houseId, page, size) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos?page=${page}&size=${size}`,
             method: "GET"
         }),
 
@@ -193,12 +206,24 @@ const apiRoutes = {
         }),
 
         /**
-         * 특정 메모 관리 API<br>
-         * GET/PATCH/DELETE /api/farms/${farmId}/houses/${houseId}/memos/${recdDttm}<br>
+         * 특정 메모 수정 API<br>
+         * PATCH /api/farms/${farmId}/houses/${houseId}/memos/${recdDttm}<br>
          * pathVariable: {farmId, houseId, recdDttm}
          */
-        management: (farmId, houseId, recdDttm) =>
-            `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos/${recdDttm}`
+        patch: (farmId, houseId, recdDttm) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos/${recdDttm}`,
+            method: "PATCH"
+        }),
+
+        /**
+         * 특정 메모 삭제 API<br>
+         * DELETE /api/farms/${farmId}/houses/${houseId}/memos/${recdDttm}<br>
+         * pathVariable: {farmId, houseId, recdDttm}
+         */
+        delete: (farmId, houseId, recdDttm) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/memos/${recdDttm}`,
+            method: "DELETE"
+        }),
     },
     relays: {
         /**

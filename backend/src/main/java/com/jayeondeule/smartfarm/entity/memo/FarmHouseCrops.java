@@ -2,6 +2,7 @@ package com.jayeondeule.smartfarm.entity.memo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +13,11 @@ import java.time.LocalDateTime;
 public class FarmHouseCrops {
     // FARMHOUSE_I_CROPS 테이블에 대응하는 엔티티
 
+    @Setter
     @Id
     private long farmId;
 
+    @Setter
     @Id
     private long housId; // 작물이 속한 재배사
 
@@ -58,9 +61,11 @@ public class FarmHouseCrops {
     @Column
     private int cropGradeAmut5 = 0;
 
+    @Setter
     @Column
-    private String ahtr; // 작성자
+    private String athr; // 작성자
 
+    @Setter
     @Column
     private String rmks; // 설명
 
@@ -70,7 +75,7 @@ public class FarmHouseCrops {
     @Column
     private String sstm; // 업로드 이미지 실제 경로
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime cropStrtDate; // 작물 재배 시작 일자
 
     @Column

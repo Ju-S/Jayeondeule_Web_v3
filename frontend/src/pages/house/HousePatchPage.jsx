@@ -65,8 +65,11 @@ export default function HousePatchPage() {
                         placeholder="작물 종류 입력"
                         required
                     />
-
-                    <Button type="submit" variant="success" className="w-100 mt-3">재배사수정</Button>
+                    <div className="d-flex justify-content-center align-items-center flex-grow-1">
+                        <Button type="submit" variant="success" className="w-75 mt-3">재배사수정</Button>
+                        <Button onClick={() => navigate(`/farm/${form.farmId}/monitor`)} variant="outline-secondary"
+                                className="w-25 mt-3 ms-3">뒤로가기</Button>
+                    </div>
                 </Form>
             </Card>
 

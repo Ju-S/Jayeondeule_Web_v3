@@ -32,11 +32,11 @@ export default function SensorLineChart({data, lineConfig}) {
         setVisibleLines(prev => ({...prev, [lineKey]: !prev[lineKey]}));
     };
 
-    // 4등분으로 tick 선택
+    // 3등분으로 tick 선택
     const xTicks = [];
     if (data.length > 0) {
-        const step = Math.floor(data.length / 3);
-        for (let i = 0; i < data.length - 1; i += step) {
+        const step = Math.max(Math.floor(data.length / 3), 1);
+        for (let i = 0; i < data.length - step; i += step) {
             xTicks.push(data[i].recdDttm);
         }
     }

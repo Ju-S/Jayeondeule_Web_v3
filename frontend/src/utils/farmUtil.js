@@ -6,8 +6,8 @@ export async function registerFarm(farmInfo) {
     return api({url, method, data: farmInfo});
 }
 
-export async function getFarmList({page, pageSize}) {
-    const {url, method} = apiRoutes.farms.getFarmList;
+export async function getFarmList(page, pageSize) {
+    const {url, method} = apiRoutes.farms.getFarmList(page, pageSize);
     return api({url, method});
 }
 

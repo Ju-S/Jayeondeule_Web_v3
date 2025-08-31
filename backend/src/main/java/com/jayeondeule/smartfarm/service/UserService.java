@@ -2,13 +2,16 @@ package com.jayeondeule.smartfarm.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayeondeule.smartfarm.dto.auth.LoginDTO;
-import com.jayeondeule.smartfarm.dto.user.UserDTO;
-import com.jayeondeule.smartfarm.dto.user.UserPasswordPatchDTO;
-import com.jayeondeule.smartfarm.dto.user.UserPatchDTO;
-import com.jayeondeule.smartfarm.dto.user.UserInsertDTO;
+import com.jayeondeule.smartfarm.dto.memo.FarmHouseCropsDTO;
+import com.jayeondeule.smartfarm.dto.user.*;
+import com.jayeondeule.smartfarm.entity.memo.FarmHouseCrops;
 import com.jayeondeule.smartfarm.entity.user.User;
 import com.jayeondeule.smartfarm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +44,21 @@ public class UserService {
     }
 
     //권한부여를 위한 유저 리스트 조회(관리자용)
-    public List<UserDTO> getUsers() {
-        List<UserDTO> result = userRepository.findAll().stream()
-                .map(user -> mapper.convertValue(user, UserDTO.class))
-                .toList();
+    public Page<UserDTO> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("rgstDttm").descending());
 
-        return result;
+        Page<User> userList = userRepository.findAll(pageable);
+
+        return userList.map(user -> mapper.convertValue(user, UserDTO.class));
+    }
+
+    //권한부여를 위한 기존 유저 리스트 조회(관리자용)
+    public Page<UserDTO> getUsers(int page, int size, long searchQuery) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("rgstDttm").descending());
+
+        Page<User> userList = userRepository.findAllByFarmId(searchQuery, pageable);
+
+        return userList.map(user -> mapper.convertValue(user, UserDTO.class));
     }
 
     //사용자 정보 조회
@@ -75,6 +87,15 @@ public class UserService {
         target.changeUserName(modifiedInfo.getUserName());
         target.changeUserPstn(modifiedInfo.getPstn());
         target.changeUserHpNo(modifiedInfo.getHpNo());
+
+        userRepository.save(target);
+    }
+
+    //사용자에게 농장 접근 권한 부여
+    public void patchUserFarmId(UserFarmIdPatchDTO modifiedInfo, String userId) {
+        User target = userRepository.findByUserId(userId);
+
+        target.setFarmId(modifiedInfo.getFarmId());
 
         userRepository.save(target);
     }

@@ -5,6 +5,7 @@ import com.jayeondeule.smartfarm.enums.user.AuthLvel;
 import com.jayeondeule.smartfarm.entity.farm.Farm;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +17,7 @@ public class User {
     @Id
     private String userId; // 아이디
 
+    @Setter
     @Column
     private long farmId;
 

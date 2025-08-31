@@ -25,3 +25,13 @@ export async function getUser() {
     const {url, method} = apiRoutes.users.me;
     return api({url, method});
 }
+
+export async function patchUserFarmId(userId, farmId) {
+    const {url, method} = apiRoutes.users.patchFarmId(userId);
+    return api({url, method, data: farmId});
+}
+
+export async function searchUserList(page, size, searchQuery) {
+    const {url, method} = apiRoutes.users.getList(page, size, searchQuery);
+    return api({url, method});
+}

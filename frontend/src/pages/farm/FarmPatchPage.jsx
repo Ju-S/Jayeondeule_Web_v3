@@ -187,7 +187,11 @@ export default function FarmPatchPage() {
                         placeholder="농장 설명 입력"
                     />
 
-                    <Button type="submit" variant="success" className="w-100 mt-3">농장수정</Button>
+                    <div className="d-flex justify-content-center align-items-center flex-grow-1">
+                        <Button type="submit" variant="success" className="w-75 mt-3">농장수정</Button>
+                        <Button onClick={() => navigate(`/farm/${farmId}/monitor`)} variant="outline-secondary"
+                                className="w-25 mt-3 ms-3">뒤로가기</Button>
+                    </div>
                 </Form>
             </Card>
 

@@ -48,7 +48,7 @@ export default function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header/>
 
-                <div className="flex-grow-1 mt-5 overflow-hidden">
+                <div className="flex-grow-1 mt-5 overflow-x-hidden">
                     {!auth.token ? (
                         <GuestRoutes/>
                     ) : auth.userInfo.authLvel === "ADMIN" ? (

@@ -17,7 +17,7 @@ export async function getHouse(farmId, houseId) {
 }
 
 export async function patchHouse(form) {
-    const { url, method } = apiRoutes.houses.patch(form.farmId, form.houseId);
+    const { url, method } = apiRoutes.houses.patch(form.farmId, form.housId);
     return api({url, method, data: form});
 }
 

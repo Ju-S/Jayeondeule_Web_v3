@@ -1,7 +1,6 @@
 package com.jayeondeule.smartfarm.entity.memo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -9,6 +8,9 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FarmHouseCropsId implements Serializable {
     private Long farmId;
     private Long housId;
