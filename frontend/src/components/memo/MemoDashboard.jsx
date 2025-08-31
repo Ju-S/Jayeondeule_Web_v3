@@ -137,7 +137,7 @@ export default function MemoDashboard({farmId, houseId}) {
         <Row>
             <Col md={12}>
                 {/* 새 메모 작성 */}
-                <Card className="mb-3 p-3">
+                <Card className="mt-3 mb-3 p-3">
                     <Form onSubmit={handleAddMemo}>
                         <InputGroup>
                             <Form.Control

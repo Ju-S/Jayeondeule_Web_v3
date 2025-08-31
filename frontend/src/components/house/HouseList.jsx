@@ -41,7 +41,8 @@ export default function HouseList({houses, selectedHouse, setSelectedHouse, auth
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => navigate(`/farm/${farmId}/house/${selectedHouse}/edit`)}>수정</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => navigate(`/farm/${farmId}/house/${selectedHouse}/edit`)}>수정</Dropdown.Item>
                                 <Dropdown.Item onClick={() => setShow(true)}>삭제</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
@@ -57,13 +58,15 @@ export default function HouseList({houses, selectedHouse, setSelectedHouse, auth
                     </>
                 )}
             </InputGroup>
-            <Button
-                variant="success"
-                onClick={() => navigate(`/farm/${farmId}/house-register`)}
-                style={{marginLeft: '0.5rem', whiteSpace: "nowrap"}}
-            >
-                재배사 추가
-            </Button>
+            {authLvel === "ADMIN" &&
+                <Button
+                    variant="success"
+                    onClick={() => navigate(`/farm/${farmId}/house-register`)}
+                    style={{marginLeft: '0.5rem', whiteSpace: "nowrap"}}
+                >
+                    재배사 추가
+                </Button>
+            }
         </div>
     )
 }

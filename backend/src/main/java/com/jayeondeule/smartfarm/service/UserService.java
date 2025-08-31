@@ -104,4 +104,8 @@ public class UserService {
     public long getUserOwnedFarmId(String userId) {
         return userRepository.findByUserId(userId).getFarmId();
     }
+
+    public void deleteUser(String userId) {
+        userRepository.deleteById(userId);
+    }
 }

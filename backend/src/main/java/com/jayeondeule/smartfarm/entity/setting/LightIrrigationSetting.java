@@ -1,6 +1,7 @@
 package com.jayeondeule.smartfarm.entity.setting;
 
 import com.jayeondeule.smartfarm.entity.house.FarmHouse;
+import com.jayeondeule.smartfarm.enums.setting.LightIrrigationSettingType;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -28,8 +29,9 @@ public class LightIrrigationSetting {
     @Column(nullable = false)
     private boolean dlteYn = false; // 설정 삭제 상태
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String unitType; // 관수, 조명 타입 설정
+    private LightIrrigationSettingType unitType; // 관수, 조명 타입 설정
 
     @Column(nullable = false)
     private LocalDateTime strtTime; // 관수, 조명 시작 시간

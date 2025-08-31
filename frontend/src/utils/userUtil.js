@@ -35,3 +35,8 @@ export async function searchUserList(page, size, searchQuery) {
     const {url, method} = apiRoutes.users.getList(page, size, searchQuery);
     return api({url, method});
 }
+
+export async function deleteUser() {
+    const {url, method} = apiRoutes.users.delete;
+    return api({url, method});
+}

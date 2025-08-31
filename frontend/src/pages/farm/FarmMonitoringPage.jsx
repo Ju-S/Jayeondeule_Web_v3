@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Container, Tabs, Tab} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
@@ -18,10 +18,13 @@ import ErrorPage from "../../pages/common/ErrorPage.jsx";
 
 import "./FarmMonitoringPage.css";
 import MemoDashboard from "../../components/memo/MemoDashboard.jsx";
+import {getUser} from "../../utils/userUtil.js";
+import SensorSettingDashboard from "../../components/sensor/SensorSettingDashboard.jsx";
 
 export default function FarmMonitoringPage() {
     const {farmId} = useParams();
     const auth = useSelector(state => state.auth);
+    const navigate = useNavigate();
 
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
@@ -60,12 +63,23 @@ export default function FarmMonitoringPage() {
         enabled: !!selectedHouse,
     });
 
+    // 사용자의 아이디로 접근권한을 가진 farm을 호출
+    useEffect(() => {
+        if (!farmId) {
+            getUser().then((res) => navigate(`/farm/${res.data.farmId}/monitor`));
+        }
+    }, [])
+
     // selectedHouse 초기값
     useEffect(() => {
         if (!selectedHouse && houses.length > 0) {
             setSelectedHouse(houses[0].housId);
         }
     }, [houses]);
+
+    const onSettingsClick = () => {
+        navigate(`/farm/${farmId}/house/${selectedHouse}/sensor/setting`);
+    }
 
     if (farmLoading) return <LoadingPage/>;
     if (farmError || housesError || sensorError) return <ErrorPage/>;
@@ -96,7 +110,7 @@ export default function FarmMonitoringPage() {
 
             {/* 최신 센서 데이터 */}
             {sensorData &&
-                <LatestSensorMonitor sensorData={sensorData}/>
+                <LatestSensorMonitor sensorData={sensorData} onSettingsClick={onSettingsClick}/>
             }
 
             {/* 탭 */}
@@ -148,6 +162,18 @@ export default function FarmMonitoringPage() {
                     {selectedHouse &&
                         <MemoDashboard farmId={farmId} houseId={houses[selectedHouse - 1].housId}/>
                     }
+                </Tab>
+
+                <Tab
+                    eventKey="sensorSetting"
+                    title={
+                        <>
+                            <span className="d-none d-sm-inline">설정</span>
+                            <span className="d-inline d-sm-none">설정</span>
+                        </>
+                    }
+                >
+                    <SensorSettingDashboard/>
                 </Tab>
             </Tabs>
         </Container>

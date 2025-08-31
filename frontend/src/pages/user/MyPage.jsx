@@ -1,13 +1,16 @@
 import {useEffect, useState} from "react";
-import {Form, Button, Card, Container, Col, Row, Modal} from "react-bootstrap";
+import {Form, Button, Card, Container, Col, Row, Modal, InputGroup} from "react-bootstrap";
 import LabeledPhoneInput from "../../components/form/LabeledPhoneInput.jsx";
 import LabeledInput from "../../components/form/LabeledInput.jsx";
 import {useNavigate} from "react-router-dom";
-import {getUser, patchUser} from "../../utils/userUtil.js";
+import {deleteUser, getUser, patchUser} from "../../utils/userUtil.js";
 import AlertModal from "../../components/common/AlertModal.jsx";
+import {useDispatch} from "react-redux";
+import {logout} from "../../store/auth/authSlice.js";
 
 export default function MyPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [form, setForm] = useState({
         userName: "",   // 서버에서 가져온 사용자 정보로 초기화
@@ -32,6 +35,7 @@ export default function MyPage() {
     }, []);
 
     const [showModal, setShowModal] = useState(false);
+    const [showWithdrawModal, setShowWithdrawModal] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -95,9 +99,14 @@ export default function MyPage() {
                         </Col>
                         <Col>
                             <div className="d-flex justify-content-end mt-3">
-                                <Button variant="success" type="submit">
-                                    수정하기
-                                </Button>
+                                <InputGroup>
+                                    <Button variant="success" type="submit">
+                                        수정하기
+                                    </Button>
+                                    <Button variant="outline-danger" onClick={() => setShowWithdrawModal(true)}>
+                                        회원탈퇴
+                                    </Button>
+                                </InputGroup>
                             </div>
                         </Col>
                     </Row>
@@ -110,6 +119,20 @@ export default function MyPage() {
                 hideModalFunc={() => setShowModal(false)}
                 title="알림"
                 body="수정이 완료되었습니다."
+            />
+
+            {/* 수정 알림 Modal */}
+            <AlertModal
+                show={showWithdrawModal}
+                hideModalFunc={() => setShowWithdrawModal(false)}
+                onClickFunc={async () => {
+                    await deleteUser();
+                    dispatch(logout()); // Redux 상태 초기화
+                    navigate("/login"); // 로그인 페이지로 이동
+                }}
+                title="정말로 회원탈퇴 하시겠습니다?"
+                body="회원탈퇴 후에는 복구가 불가능합니다."
+                variant="danger"
             />
         </Container>
     )

@@ -8,26 +8,6 @@ import CommonRoutes from "./CommonRoutes.jsx";
 export default function MonitorRoutes() {
     return (
         <Routes>
-            <Route
-                path="/"
-                element={<Navigate to="/farm-management" replace/>}
-            />
-            <Route
-                path="/farm-management"
-                element={
-                    <PrivateRoute>
-                        <FarmManagementPage/>
-                    </PrivateRoute>
-                }
-            />
-            <Route
-                path="/farm-register"
-                element={
-                    <PrivateRoute>
-                        <FarmRegisterPage/>
-                    </PrivateRoute>
-                }
-            />
             <Route path="*" element={<CommonRoutes/>}/>
         </Routes>
     )

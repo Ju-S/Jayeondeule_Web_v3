@@ -32,7 +32,6 @@ export default function UserAddModal({
             setResults(prev => {
                 return [...prev, ...newUsers];
             });
-            console.log(newUsers);
 
             if (newUsers.length === 0) setSearchHasMore(false);
         } catch (err) {

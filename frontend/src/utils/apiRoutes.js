@@ -34,6 +34,13 @@ const apiRoutes = {
         register: {url: `${BASE_URL}/users`, method: "POST"},
 
         /**
+         * 회원탈퇴 API<br>
+         * PATCH /api/users<br>
+         * body: {UserPatchDTO}
+         */
+        delete: {url: `${BASE_URL}/users`, method: "DELETE"},
+
+        /**
          * 현재 사용자 정보 조회 API<br>
          * GET /api/user/me<br>
          * response: {UserDTO}

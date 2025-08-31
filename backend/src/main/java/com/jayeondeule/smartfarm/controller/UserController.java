@@ -107,6 +107,8 @@ public class UserController {
     //회원탈퇴
     @DeleteMapping
     public void deleteUser(@AuthenticationPrincipal UserClaimDTO userInfo) {
-
+        if(userInfo != null) {
+            userService.deleteUser(userInfo.getUserId());
+        }
     }
 }

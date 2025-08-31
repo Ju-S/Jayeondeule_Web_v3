@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface FarmHouseRepository extends JpaRepository<FarmHouse, FarmHouseId> {
     List<FarmHouse> findAllByFarmId(long farmId);
+
+    List<FarmHouse> findAllByFarmIdOrderByHousNameAsc(long farmId);
     //재배사 관련 데이터 CRUD 인터페이스
 }

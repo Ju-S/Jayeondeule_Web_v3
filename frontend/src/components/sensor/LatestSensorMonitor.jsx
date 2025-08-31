@@ -3,14 +3,9 @@ import {Button, Card} from "react-bootstrap";
 import {GearFill} from "react-bootstrap-icons";
 import {useNavigate} from "react-router-dom";
 
-export default function LatestSensorMonitor({sensorData}) {
-    const navigate = useNavigate();
-
+export default function LatestSensorMonitor({sensorData, onSettingsClick}) {
     const latestSensorData = sensorData[sensorData.length - 1];
 
-    const onSettingsClick = () => {
-
-    };
     return (
         <>
             {sensorData.length > 0 && (
@@ -29,29 +24,29 @@ export default function LatestSensorMonitor({sensorData}) {
                     <Card className="p-3 mb-3"
                           style={{overflowX: "auto", minHeight: "100px", display: "flex", alignItems: "center", overflow: "hidden"}}>
                         {/* 카드 안쪽 오른쪽 상단 설정 버튼 */}
-                        <Button
-                            variant="outline-secondary"
-                            size="sm"
-                            onClick={onSettingsClick}
-                            style={{
-                                position: "absolute",
-                                top: "0",
-                                right: "0",
-                                padding: "0.4rem 0.4rem",
-                                borderTopLeftRadius: "0",
-                                borderTopRightRadius: "0.25rem",
-                                borderBottomLeftRadius: "0.25rem",
-                                borderBottomRightRadius: "0",
-                                borderLeft: "1px solid #dee2e6",
-                                borderBottom: "1px solid #dee2e6",
-                                borderTop: "none",
-                                borderRight: "none",
-                                zIndex: 10,
-                            }}
-                            className="gear-button"
-                        >
-                            <GearFill size={20}/>
-                        </Button>
+                        {/*<Button*/}
+                        {/*    variant="outline-secondary"*/}
+                        {/*    size="sm"*/}
+                        {/*    onClick={onSettingsClick}*/}
+                        {/*    style={{*/}
+                        {/*        position: "absolute",*/}
+                        {/*        top: "0",*/}
+                        {/*        right: "0",*/}
+                        {/*        padding: "0.4rem 0.4rem",*/}
+                        {/*        borderTopLeftRadius: "0",*/}
+                        {/*        borderTopRightRadius: "0.25rem",*/}
+                        {/*        borderBottomLeftRadius: "0.25rem",*/}
+                        {/*        borderBottomRightRadius: "0",*/}
+                        {/*        borderLeft: "1px solid #dee2e6",*/}
+                        {/*        borderBottom: "1px solid #dee2e6",*/}
+                        {/*        borderTop: "none",*/}
+                        {/*        borderRight: "none",*/}
+                        {/*        zIndex: 10,*/}
+                        {/*    }}*/}
+                        {/*    className="gear-button"*/}
+                        {/*>*/}
+                        {/*    <GearFill size={20}/>*/}
+                        {/*</Button>*/}
                         <table className="table table-borderless mb-0 text-center" style={{minWidth: "300px"}}>
                             <thead>
                             <tr className="d-none d-md-table-row">

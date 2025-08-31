@@ -5,10 +5,19 @@ import ErrorPage from "../pages/common/ErrorPage.jsx";
 import MyPage from "../pages/user/MyPage.jsx";
 import PasswordChangePage from "../pages/user/PasswordChangePage.jsx";
 import FarmMonitoringPage from "../pages/farm/FarmMonitoringPage.jsx";
+import SensorSettingDashboard from "../components/sensor/SensorSettingDashboard.jsx";
 
 export default function CommonRoutes() {
     return (
         <Routes>
+            <Route
+                path="/"
+                element={
+                    <PrivateRoute>
+                        <FarmMonitoringPage/>
+                    </PrivateRoute>
+                }
+            />
             <Route
                 path="/mypage"
                 element={
@@ -30,6 +39,14 @@ export default function CommonRoutes() {
                 element={
                     <PrivateRoute>
                         <FarmMonitoringPage/>
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/farm/:farmId/house/:houseId/sensor/setting"
+                element={
+                    <PrivateRoute>
+                        <SensorSettingDashboard/>
                     </PrivateRoute>
                 }
             />

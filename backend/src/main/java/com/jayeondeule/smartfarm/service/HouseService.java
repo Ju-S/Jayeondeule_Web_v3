@@ -29,7 +29,7 @@ public class HouseService {
     }
 
     public List<FarmHouseDTO> getHouseList(long farmId) {
-        List<FarmHouse> result = farmHouseRepository.findAllByFarmId(farmId);
+        List<FarmHouse> result = farmHouseRepository.findAllByFarmIdOrderByHousNameAsc(farmId);
         return result.stream().map(item -> mapper.convertValue(item, FarmHouseDTO.class)).toList();
     }
 
