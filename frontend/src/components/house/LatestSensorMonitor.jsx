@@ -1,0 +1,97 @@
+import React from "react";
+import {Button, Card} from "react-bootstrap";
+import {GearFill} from "react-bootstrap-icons";
+import {useNavigate} from "react-router-dom";
+
+export default function LatestSensorMonitor({sensorData}) {
+    const navigate = useNavigate();
+
+    const latestSensorData = sensorData[sensorData.length - 1];
+
+    const onSettingsClick = () => {
+
+    };
+    return (
+        <>
+            {sensorData.length > 0 && (
+                <div style={{position: "relative", marginBottom: "1rem"}}>
+                    {/* 카드 바깥 오른쪽 상단에 측정 시간 */}
+                    <div style={{
+                        position: "absolute",
+                        top: "-1.5rem",
+                        right: "0",
+                        fontWeight: "bold",
+                        fontSize: "0.9rem"
+                    }}>
+                        {new Date(latestSensorData.recdDttm).toLocaleString()}
+                    </div>
+
+                    <Card className="p-3 mb-3"
+                          style={{overflowX: "auto", minHeight: "100px", display: "flex", alignItems: "center", overflow: "hidden"}}>
+                        {/* 카드 안쪽 오른쪽 상단 설정 버튼 */}
+                        <Button
+                            variant="outline-secondary"
+                            size="sm"
+                            onClick={onSettingsClick}
+                            style={{
+                                position: "absolute",
+                                top: "0",
+                                right: "0",
+                                padding: "0.4rem 0.4rem",
+                                borderTopLeftRadius: "0",
+                                borderTopRightRadius: "0.25rem",
+                                borderBottomLeftRadius: "0.25rem",
+                                borderBottomRightRadius: "0",
+                                borderLeft: "1px solid #dee2e6",
+                                borderBottom: "1px solid #dee2e6",
+                                borderTop: "none",
+                                borderRight: "none",
+                                zIndex: 10,
+                            }}
+                            className="gear-button"
+                        >
+                            <GearFill size={20}/>
+                        </Button>
+                        <table className="table table-borderless mb-0 text-center" style={{minWidth: "300px"}}>
+                            <thead>
+                            <tr className="d-none d-md-table-row">
+                                <th>실내 온도</th>
+                                <th>실외 온도</th>
+                                <th>실내 습도</th>
+                                <th>실외 습도</th>
+                                <th>CO2</th>
+                                <th>수온</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {/* PC용 한 줄 */}
+                            <tr className="d-none d-md-table-row">
+                                <td>{latestSensorData.indrTprtValu + "℃" ?? "-"}</td>
+                                <td>{latestSensorData.oudrTprtValu + "℃" ?? "-"}</td>
+                                <td>{latestSensorData.indrHmdtValu + "%" ?? "-"}</td>
+                                <td>{latestSensorData.oudrHmdtValu + "%" ?? "-"}</td>
+                                <td>{latestSensorData.co2Valu + "ppm" ?? "-"}</td>
+                                <td>{latestSensorData.watrTprtValu + "℃" ?? "-"}</td>
+                            </tr>
+
+                            {/* 모바일용 2열씩 3줄 */}
+                            <tr className="d-md-none">
+                                <td><b>실내 온도:</b> {latestSensorData.indrTprtValu + "℃"  ?? "-"}</td>
+                                <td><b>실외 온도:</b> {latestSensorData.oudrTprtValu + "℃"  ?? "-"}</td>
+                            </tr>
+                            <tr className="d-md-none">
+                                <td><b>실내 습도:</b> {latestSensorData.indrHmdtValu + "%"  ?? "-"}</td>
+                                <td><b>실외 습도:</b> {latestSensorData.oudrHmdtValu + "%"  ?? "-"}</td>
+                            </tr>
+                            <tr className="d-md-none">
+                                <td><b>CO2:</b> {latestSensorData.co2Valu + "ppm"  ?? "-"}</td>
+                                <td><b>수온:</b> {latestSensorData.watrTprtValu + "℃"  ?? "-"}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </Card>
+                </div>
+            )}
+        </>
+    )
+}

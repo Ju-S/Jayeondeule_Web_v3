@@ -28,7 +28,11 @@ public class HouseController {
     @PostMapping
     public void insertFarmHouse(@RequestBody FarmHouseInsertDTO insertInfo,
                                 @AuthenticationPrincipal UserClaimDTO userInfo) {
-
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+                houseService.insertHouse(insertInfo);
+            }
+        }
     }
 
     //농장의 재배사 조회
@@ -44,13 +48,32 @@ public class HouseController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
+    //농장의 특정 재배사 조회
+    @GetMapping("/{houseId}")
+    public ResponseEntity<FarmHouseDTO> getFarmHouse(@PathVariable Long farmId,
+                                     @PathVariable Long houseId,
+                                     @AuthenticationPrincipal UserClaimDTO userInfo) {
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
+                    userService.getUserOwnedFarmId(userInfo.getUserId()) == farmId) {
+                return ResponseEntity.ok(houseService.getHouse(farmId, houseId));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
     //재배사 정보 수정
     @PatchMapping("/{houseId}")
     public void patchFarmHouse(@RequestBody FarmHousePatchDTO modifiedInfo,
                                @PathVariable Long farmId,
                                @PathVariable Long houseId,
                                @AuthenticationPrincipal UserClaimDTO userInfo) {
-
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
+                    userService.getUserOwnedFarmId(userInfo.getUserId()) == farmId) {
+                houseService.patchHouse(modifiedInfo, farmId, houseId);
+            }
+        }
     }
 
     //재배사 삭제
@@ -58,6 +81,10 @@ public class HouseController {
     public void deleteFarmHouse(@PathVariable Long farmId,
                                 @PathVariable Long houseId,
                                 @AuthenticationPrincipal UserClaimDTO userInfo) {
-
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN)) {
+                houseService.deleteHouse(farmId, houseId);
+            }
+        }
     }
 }

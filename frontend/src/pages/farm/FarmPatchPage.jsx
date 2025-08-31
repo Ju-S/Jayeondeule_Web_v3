@@ -4,11 +4,15 @@ import LabeledInput from "../../components/form/LabeledInput.jsx";
 import LabeledAddress from "../../components/form/LabeledAddress.jsx";
 import LabeledSelect from "../../components/form/LabeledSelect.jsx";
 import LabeledPhoneInput from "../../components/form/LabeledPhoneInput.jsx";
-import {registerFarm} from "../../utils/farmUtil.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {getFarm, patchFarm} from "../../utils/farmUtil.js";
+import AlertModal from "../../components/common/AlertModal.jsx";
 
-export default function FarmRegisterPage() {
+export default function FarmPatchPage() {
     const navigate = useNavigate();
+    const {farmId} = useParams();
+
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -17,10 +21,25 @@ export default function FarmRegisterPage() {
         document.body.appendChild(script);
     }, []);
 
-    const [form, setForm] = useState({
+    useEffect(() => {
+        const fetchFarm = async () => {
+            try {
+                const res = await getFarm({farmId});
+                setFarm(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchFarm();
+    }, [farmId]);
+
+    const [farm, setFarm] = useState({
+        farmId: "",
         farmName: "",
         farmDomi: "",
         openDate: "",
+        closeDate: "",
         telNo: "",
         hpNo: "",
         faxNo: "",
@@ -34,13 +53,13 @@ export default function FarmRegisterPage() {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setForm({...form, [name]: value});
+        setFarm({...farm, [name]: value});
     };
 
     const handleAddressSearch = (e) => {
         new window.daum.Postcode({
             oncomplete: function (data) {
-                setForm((state) => ({
+                setFarm((state) => ({
                     ...state,
                     addr: data.address,
                 }));
@@ -50,19 +69,19 @@ export default function FarmRegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await registerFarm(form).then(() => navigate("/farm-management"));
+        await patchFarm(farm).then(() => setShowModal(true));
     };
 
     return (
         <Container className="d-flex justify-content-center align-items-center flex-grow-1">
             <Card className="p-4 m-5" style={{width: "800px"}}>
                 <Form className="p-4" onSubmit={handleSubmit}>
-                    <h2 className="mb-4">농장등록</h2>
+                    <h2 className="mb-4">농장수정</h2>
 
                     <LabeledInput
                         label="농장 이름"
                         name="farmName"
-                        value={form.farmName}
+                        value={farm.farmName}
                         onChange={handleChange}
                         placeholder="농장 이름 입력"
                         pattern="^[가-힣a-zA-Z0-9 ]{2,20}$"
@@ -72,7 +91,7 @@ export default function FarmRegisterPage() {
                     <LabeledInput
                         label="농장 도메인"
                         name="farmDomi"
-                        value={form.farmDomi}
+                        value={farm.farmDomi}
                         onChange={handleChange}
                         placeholder="농장 도메인 입력"
                         pattern="^[a-zA-Z0-9.]*$"
@@ -83,28 +102,35 @@ export default function FarmRegisterPage() {
                         label="개업일자"
                         type="date"
                         name="openDate"
-                        value={form.openDate}
+                        value={farm.openDate}
                         onChange={handleChange}
                         required
+                    />
+                    <LabeledInput
+                        label="폐업일자"
+                        type="date"
+                        name="closeDate"
+                        value={farm.closeDate}
+                        onChange={handleChange}
                     />
                     <LabeledPhoneInput
                         label="대표번호"
                         name="telNo"
-                        value={form.telNo}
+                        value={farm.telNo}
                         onChange={handleChange}
                         required
                     />
                     <LabeledPhoneInput
                         label="전화번호"
                         name="hpNo"
-                        value={form.hpNo}
+                        value={farm.hpNo}
                         placeholder="063-1234-5678"
                         onChange={handleChange}
                     />
                     <LabeledPhoneInput
                         label="팩스번호"
                         name="faxNo"
-                        value={form.faxNo}
+                        value={farm.faxNo}
                         placeholder="063-1234-5678"
                         onChange={handleChange}
                     />
@@ -112,14 +138,14 @@ export default function FarmRegisterPage() {
                         label="대표메일"
                         type="email"
                         name="mail"
-                        value={form.mail}
+                        value={farm.mail}
                         onChange={handleChange}
                         placeholder="대표메일 입력"
                     />
                     <LabeledInput
                         label="농장 IP"
                         name="ipAddr"
-                        value={form.ipAddr}
+                        value={farm.ipAddr}
                         onChange={handleChange}
                         placeholder="농장 IP 입력"
                         required
@@ -127,7 +153,7 @@ export default function FarmRegisterPage() {
                     <LabeledInput
                         label="농장 포트"
                         name="port"
-                        value={form.port}
+                        value={farm.port}
                         onChange={handleChange}
                         placeholder="농장 포트 입력"
                         pattern="^[0-9]{2,5}$"
@@ -137,7 +163,7 @@ export default function FarmRegisterPage() {
                     <LabeledAddress
                         label="주소"
                         name="addr"
-                        value={form.addr}
+                        value={farm.addr}
                         onChange={handleChange}
                         onSearch={handleAddressSearch}
                         required
@@ -149,21 +175,29 @@ export default function FarmRegisterPage() {
                         option={[
                             { value: "10", label: "상황버섯"},
                         ]}
-                        value={form.mainPrdt}
+                        value={farm.mainPrdt}
                         onChange={handleChange}
                         required
                     />
                     <LabeledInput
                         label="농장 설명"
                         name="rmks"
-                        value={form.rmks}
+                        value={farm.rmks}
                         onChange={handleChange}
                         placeholder="농장 설명 입력"
                     />
 
-                    <Button type="submit" variant="success" className="w-100 mt-3">농장등록</Button>
+                    <Button type="submit" variant="success" className="w-100 mt-3">농장수정</Button>
                 </Form>
             </Card>
+
+            {/* 수정 알림 Modal */}
+            <AlertModal
+                show={showModal}
+                hideModalFunc={() => setShowModal(false)}
+                title="알림"
+                body="수정이 완료되었습니다."
+            />
         </Container>
     );
 }

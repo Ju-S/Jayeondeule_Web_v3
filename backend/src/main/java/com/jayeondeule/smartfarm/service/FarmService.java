@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jayeondeule.smartfarm.dto.farm.FarmDTO;
 import com.jayeondeule.smartfarm.dto.farm.FarmInsertDTO;
+import com.jayeondeule.smartfarm.dto.farm.FarmPatchDTO;
 import com.jayeondeule.smartfarm.entity.farm.Farm;
 import com.jayeondeule.smartfarm.entity.user.User;
 import com.jayeondeule.smartfarm.repository.FarmRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,23 +35,48 @@ public class FarmService {
 
     public Page<FarmDTO> getAllFarms(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("rgstDttm").descending());
-        System.out.println(farmRepository.findAllBy(pageable));
 
         Page<Farm> farmList = farmRepository.findAllBy(pageable);
 
         return farmList.map(farm -> mapper.convertValue(farm, FarmDTO.class));
     }
 
-    public Page<FarmDTO> getFarmsByUserId(int page, int size, String userId) {
+    public FarmDTO getFarmByUserId(String userId) {
         User owner = userRepository.findByUserId(userId);
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("rgstDttm").descending());
-        List<Farm> userFarm = farmRepository.findByFarmId(owner.getFarmId());
+        Farm userFarm = farmRepository.findByFarmId(owner.getFarmId());
 
-        List<FarmDTO> userFarmDTO = userFarm.stream().map(
-                farm -> mapper.convertValue(farm, FarmDTO.class)
-        ).toList();
+        return mapper.convertValue(userFarm, FarmDTO.class);
+    }
 
-        return new PageImpl<>(userFarmDTO, pageable, userFarm.size());
+    public FarmDTO getFarmByFarmId(Long farmId) {
+        Farm userFarm = farmRepository.findByFarmId(farmId);
+
+        return mapper.convertValue(userFarm, FarmDTO.class);
+    }
+
+    public void deleteFarmByFarmId(Long farmId) {
+        farmRepository.deleteById(farmId);
+    }
+
+    public void patchFarmByFarmId(Long farmId, FarmPatchDTO modifiedInfo) {
+        Farm target = farmRepository.findByFarmId(farmId);
+
+        target.setFarmName(modifiedInfo.getFarmName());
+        target.setFarmDomi(modifiedInfo.getFarmDomi());
+
+        target.setOpenDate(modifiedInfo.getOpenDate());
+        target.setCloseDate(modifiedInfo.getCloseDate());
+
+        target.setTelNo(modifiedInfo.getTelNo());
+        target.setHpNo(modifiedInfo.getHpNo());
+        target.setMail(modifiedInfo.getMail());
+        target.setIpAddr(modifiedInfo.getIpAddr());
+        target.setPort(modifiedInfo.getPort());
+        target.setAddr(modifiedInfo.getAddr());
+        target.setMainPrdt(modifiedInfo.getMainPrdt());
+        target.setRmks(modifiedInfo.getRmks());
+
+        farmRepository.save(target);
     }
 }

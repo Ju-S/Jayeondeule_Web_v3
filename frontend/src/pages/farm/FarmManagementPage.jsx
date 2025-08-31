@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import {useEffect, useState, useRef, useCallback} from "react";
 import {
     Table,
     Form,
@@ -6,14 +6,13 @@ import {
     Row,
     Col,
     Spinner,
-    OverlayTrigger,
-    Tooltip,
     InputGroup,
-    Dropdown
+    Dropdown, Button
 } from "react-bootstrap";
 import apiRoutes from "../../utils/apiRoutes.js";
 import api from "../../utils/jwtUtil.js";
 import {useNavigate} from "react-router-dom";
+import TruncatedOverlayTrigger from "../../components/farm/TruncatedOverlayTrigger.jsx";
 
 export default function FarmManagementPage() {
     const navigate = useNavigate();
@@ -29,7 +28,7 @@ export default function FarmManagementPage() {
         if (loading) return;
         setLoading(true);
         try {
-            const res = await api(apiRoutes.farms.getFarm(page, 20));
+            const res = await api(apiRoutes.farms.getFarmList(page, 20));
             const newFarms = res.data.content || [];
 
             // 중복 제거
@@ -103,38 +102,40 @@ export default function FarmManagementPage() {
             <Table striped bordered hover responsive>
                 <thead>
                 <tr>
-                    <th style={{ width: "5%" }}>ID</th>
-                    <th style={{ width: "25%" }}>농장 이름</th>
-                    <th style={{ width: "50%" }}>주소</th>
-                    <th className="d-none d-md-table-cell" style={{ width: "20%" }}>등록일</th>
+                    <th style={{width: "5%"}}>ID</th>
+                    <th style={{width: "25%"}}>농장 이름</th>
+                    <th style={{width: "50%"}}>주소</th>
+                    <th className="d-none d-md-table-cell" style={{width: "20%"}}>등록일</th>
                 </tr>
                 </thead>
                 <tbody>
                 {filteredFarms.map((farm, index) => (
                     <tr key={farm.farmId} ref={filteredFarms.length === index + 1 ? lastFarmRef : null}>
                         <td className="text-success"
-                            style={{ verticalAlign: "middle", cursor: "pointer" }}
+                            style={{verticalAlign: "middle", cursor: "pointer"}}
                             onClick={() => navigate(`/farm/${farm.farmId}/monitor`)}>
                             {farm.farmId}
                         </td>
 
-                        <td style={{...truncateStyle, maxWidth: "20vw"}}>
-                            <OverlayTrigger
-                                placement="top"
-                                overlay={<Tooltip id={`tooltip-farmName-${farm.farmId}`}>{farm.farmName}</Tooltip>}>
-                                <div style={{...truncateStyle, maxWidth: "100%"}}>{farm.farmName}</div>
-                            </OverlayTrigger>
+                        <td>
+                            <TruncatedOverlayTrigger
+                                tooltipId={farm.farmId}
+                                overlayText={farm.farmName}
+                                divText={farm.farmName}
+                                maxWidth="20vw"
+                            />
                         </td>
 
-                        <td style={{...truncateStyle, maxWidth: "50vw"}}>
-                            <OverlayTrigger
-                                placement="top"
-                                overlay={<Tooltip id={`tooltip-addr-${farm.farmId}`}>{farm.addr}</Tooltip>}>
-                                <div style={{...truncateStyle, maxWidth: "100%"}}>{farm.addr}</div>
-                            </OverlayTrigger>
+                        <td>
+                            <TruncatedOverlayTrigger
+                                tooltipId={farm.farmId}
+                                overlayText={farm.addr}
+                                divText={farm.addr}
+                                maxWidth="50vw"
+                            />
                         </td>
 
-                        <td className="d-none d-md-table-cell" style={{ verticalAlign: "middle" }}>
+                        <td className="d-none d-md-table-cell" style={{verticalAlign: "middle"}}>
                             {new Date(farm.rgstDttm).toLocaleDateString()}
                         </td>
                     </tr>
@@ -144,7 +145,7 @@ export default function FarmManagementPage() {
 
             {loading && (
                 <div className="text-center my-3">
-                    <Spinner animation="border" />
+                    <Spinner animation="border"/>
                 </div>
             )}
 

@@ -1,14 +1,16 @@
 package com.jayeondeule.smartfarm.entity.house;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FarmHouseId implements Serializable {
     private Long farmId;
     private Long housId;

@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Card, Container, Row, Col, Spinner, Nav, Form, Button, InputGroup } from "react-bootstrap";
-import { getHouseList } from "../../utils/houseUtil.js";
-import { getSensorData } from "../../utils/sensorUtil.js";
-import SensorLineChart from "../../components/sensor/SensorLineChart.jsx";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import {Container, Form, Button, InputGroup, Tabs, Tab} from "react-bootstrap";
+import {getHouseList} from "../../utils/houseUtil.js";
+import {getSensorData} from "../../utils/sensorUtil.js";
+import FarmKebabMenu from "../../components/farm/FarmKebabMenu.jsx";
+import {getFarm} from "../../utils/farmUtil.js";
+import {useSelector} from "react-redux";
+import LatestSensorMonitor from "../../components/house/LatestSensorMonitor.jsx";
+import HouseSensorChart from "../../components/house/HouseSensorChart.jsx";
+import HouseList from "../../components/house/HouseList.jsx";
+import "./FarmMonitoringPage.css";
+import RelayDashboard from "../../components/house/RelayDashboard.jsx";
 
 export default function FarmMonitoringPage() {
-    const { farmId } = useParams();
+    const auth = useSelector(state => state.auth);
+
+    const {farmId} = useParams();
+    const [farm, setFarm] = useState(null);
     const [houses, setHouses] = useState([]);
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [sensorData, setSensorData] = useState([]);
@@ -20,7 +30,7 @@ export default function FarmMonitoringPage() {
     useEffect(() => {
         const fetchHouses = async () => {
             try {
-                const res = await getHouseList({ farmId });
+                const res = await getHouseList({farmId});
                 setHouses(res.data);
                 if (res.data.length > 0) {
                     setSelectedHouse(res.data[0].housId);
@@ -29,7 +39,18 @@ export default function FarmMonitoringPage() {
                 console.error(err);
             }
         };
+
+        const fetchFarm = async () => {
+            try {
+                const res = await getFarm({farmId});
+                setFarm(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
         fetchHouses();
+        fetchFarm();
     }, [farmId]);
 
     // 선택된 하우스의 센서 데이터 가져오기
@@ -57,51 +78,75 @@ export default function FarmMonitoringPage() {
 
     return (
         <Container className="mt-4">
-            <h3>{farmId} 현황</h3>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                {farm && (
+                    auth.userInfo.authLvel === "ADMIN" ? (
+                        <>
+                            <h3 className="mb-0">{farm.farmName} 현황</h3>
+                            <FarmKebabMenu farmId={farmId}/>
+                        </>
+                    ) : (
+                        <h3 className="mb-0">{farm.farmName} 현황</h3>
+                    )
+                )}
+            </div>
 
-            {/* 하우스 선택 탭 */}
-            <Nav variant="tabs" activeKey={selectedHouse} onSelect={(key) => setSelectedHouse(key)}>
-                {houses.map((house) => (
-                    <Nav.Item key={house.housId}>
-                        <Nav.Link eventKey={house.housId}>{house.housName}</Nav.Link>
-                    </Nav.Item>
-                ))}
-            </Nav>
+            {/* 농장의 재배사 리스트 */}
+            <HouseList
+                selectedHouse={selectedHouse}
+                authLvel={auth.userInfo.authLvel}
+                houses={houses}
+                setSelectedHouse={setSelectedHouse}
+                farmId={farmId}
+            />
 
-            {/* 날짜 범위 선택 */}
-            <Form className="d-flex align-items-center gap-2 mt-3">
-                <InputGroup>
-                    <Form.Control
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
-                    <InputGroup.Text>~</InputGroup.Text>
-                    <Form.Control
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
-                    <Button variant="success" onClick={fetchSensorData}>
-                        조회
-                    </Button>
-                </InputGroup>
-            </Form>
+            {/* 최신 센서 데이터 */}
+            <LatestSensorMonitor sensorData={sensorData}/>
 
-            {/* line chart로 표시 */}
-            <Row className="mt-3 mb-3">
-                <Col>
-                    <Card className="p-3">
-                        {loading ? (
-                            <Spinner animation="border"/>
-                        ) : (
-                            <SensorLineChart
-                                data={sensorData}
+            <Tabs id="custom-tabs">
+                <Tab
+                    eventKey="sensor"
+                    title={<><span className="d-none d-sm-inline">센서 기록 조회</span><span className="d-inline d-sm-none">센서</span></>}
+                >
+                    {/* 날짜 범위 선택 */}
+                    <Form className="d-flex align-items-center gap-2 mt-3">
+                        <InputGroup>
+                            <Form.Control
+                                type="date"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
                             />
-                        )}
-                    </Card>
-                </Col>
-            </Row>
+                            <InputGroup.Text>~</InputGroup.Text>
+                            <Form.Control
+                                type="date"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                            <Button variant="success" onClick={fetchSensorData}>
+                                조회
+                            </Button>
+                        </InputGroup>
+                    </Form>
+
+                    {/* line chart로 표시 */}
+                    <HouseSensorChart
+                        loading={loading}
+                        sensorData={sensorData}
+                    />
+                </Tab>
+                <Tab
+                    eventKey="relay"
+                    title={<><span className="d-none d-sm-inline">릴레이 현황 및 조작</span><span className="d-inline d-sm-none">릴레이</span></>}
+                >
+                    <RelayDashboard farmId={farmId} houseId={selectedHouse}/>
+                </Tab>
+                <Tab
+                    eventKey="memo"
+                    title={<><span className="d-none d-sm-inline">재배사 메모</span><span className="d-inline d-sm-none">메모</span></>}
+                >
+
+                </Tab>
+            </Tabs>
         </Container>
     );
 }

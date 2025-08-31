@@ -1,8 +1,8 @@
 package com.jayeondeule.smartfarm.entity.house;
 
-import com.jayeondeule.smartfarm.entity.farm.Farm;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -18,21 +18,27 @@ public class FarmHouse {
     @Id
     private long housId;
 
-    @Column(nullable = false, unique = true)
+    @Setter
+    @Column(nullable = false)
     private String housName; // 재배사 이름
 
+    @Setter
     @Column
     private LocalDateTime lastGetDttm; // 마지막 작물 수확 일자
 
+    @Setter
     @Column
     private String snsrRfrsItvl;  // 센서 측정 시간 간격
 
+    @Setter
     @Column(nullable = false)
     private boolean rfrsFlag = false; // 수동 센서 측정
 
+    @Setter
     @Column(nullable = false)
     private String cropKind; // 작물 종류
 
+    @Setter
     @Column(nullable = false)
     private boolean mnulCtrlFlag = false; // 릴레이 수동 조작 여부
 

@@ -2,6 +2,7 @@ package com.jayeondeule.smartfarm.entity.relay;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,15 +12,17 @@ import java.time.LocalDateTime;
 @Table(name = "RELAY_L_RECORDING")
 public class RelayRecording {
     //RELAY_L_RECORDING 테이블 엔티티 (릴레이 동작상태, 저장일자 등)
+    @Setter
     @Id
     private long farmId;
 
+    @Setter
     @Id
     private long housId; // 릴레이가 속한 재배사
 
     @Id
     @Column(columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
-    private LocalDateTime recd_dttm = LocalDateTime.now();; // 측정일자
+    private LocalDateTime recdDttm = LocalDateTime.now();; // 측정일자
 
     @Column(nullable = false, name = "relay_1st_flag")
     private boolean relay1stFlag = false; // 릴레이1 작동 여부

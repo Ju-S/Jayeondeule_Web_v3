@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class RelayDTO {
-    private LocalDateTime recd_dttm; // 측정일자
+    private LocalDateTime recdDttm; // 측정일자
 
     private boolean relay1stFlag = false; // 릴레이1 작동 여부
     private boolean relay2stFlag = false; // 릴레이2 작동 여부

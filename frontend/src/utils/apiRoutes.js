@@ -70,10 +70,30 @@ const apiRoutes = {
          * 일반 사용자 - {FarmDTO}<br>
          * 관리자 - {List<FarmDTO>}
          */
-        getFarm: (page = 0, size = 20) => ({
+        getFarmList: (page = 0, size = 20) => ({
             url: `${BASE_URL}/farms?page=${page}&size=${size}`,
             method: "GET"
         }),
+
+        /**
+         * 특정 농장 목록 조회 API<br>
+         * GET /api/farms/{farmId}<br>
+         * response: {FarmDTO}<br>
+         */
+        getFarm: (farmId) => ({
+            url: `${BASE_URL}/farms/${farmId}`,
+            method: "GET"
+        }),
+
+        /**
+         * 소유 농장 목록 조회 API<br>
+         * GET /api/farms/me<br>
+         * response: {FarmDTO}<br>
+         */
+        getMyFarm: {
+            url: `${BASE_URL}/farms/me}`,
+            method: "GET"
+        },
 
         /**
          * 농장 등록 API<br>
@@ -83,11 +103,24 @@ const apiRoutes = {
         register: {url: `${BASE_URL}/farms`, method: "POST"},
 
         /**
-         * 특정 농장 관리 API<br>
-         * GET/PATCH/DELETE /api/farms<br>
+         * 특정 농장 삭제 API<br>
+         * DELETE /api/farms/{farmId}<br>
          * pathVariable: {farmId}
          */
-        management: (farmId) => `${BASE_URL}/farms/${farmId}`
+        delete: (farmId) => ({
+            url: `${BASE_URL}/farms/${farmId}`,
+            method: "DELETE"
+        }),
+
+        /**
+         * 특정 농장 수정 API<br>
+         * PATCH /api/farms/{farmId}<br>
+         * pathVariable: {farmId}
+         */
+        edit: (farmId) => ({
+            url: `${BASE_URL}/farms/${farmId}`,
+            method: "PATCH"
+        }),
     },
     houses: {
         /**
@@ -107,11 +140,34 @@ const apiRoutes = {
         register: (farmId) => ({url: `${BASE_URL}/farms/${farmId}/houses`, method: "POST"}),
 
         /**
-         * 특정 재배사 관리 API<br>
-         * GET/PATCH/DELETE /api/farms/${farmId}/house/${houseId}<br>
+         * 특정 재배사 수정 API<br>
+         * PATCH /api/farms/${farmId}/house/${houseId}<br>
          * pathVariable: {farmId, houseId}
          */
-        management: (farmId, houseId) => `${BASE_URL}/farms/${farmId}/houses/${houseId}`
+        patch: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}`,
+            method: "PATCH"
+        }),
+
+        /**
+         * 특정 재배사 조회 API<br>
+         * GET /api/farms/${farmId}/house/${houseId}<br>
+         * pathVariable: {farmId, houseId}
+         */
+        get: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}`,
+            method: "GET"
+        }),
+
+        /**
+         * 특정 재배사 삭제 API<br>
+         * DELETE /api/farms/${farmId}/house/${houseId}<br>
+         * pathVariable: {farmId, houseId}
+         */
+        delete: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}`,
+            method: "DELETE"
+        }),
     },
     memos: {
         // farmhouse_l_crops가 memo의 역할을 함.

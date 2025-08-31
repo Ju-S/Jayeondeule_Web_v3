@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface FarmRepository extends JpaRepository<Farm, Long> {
-    List<Farm> findByFarmId(long farmId);
     Page<Farm> findAllBy(Pageable pageable);
+
+    Farm findByFarmId(Long farmId);
 }

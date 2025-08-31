@@ -1,0 +1,4 @@
+/* 선택되지 않은 탭의 텍스트 색상 */
+#custom-tabs .nav-link:not(.active) {
+    color: #198754; /* 원하는 색상으로 변경 */
+}
