@@ -40,7 +40,7 @@ public class SensorRecording {
     private Double watrTprtValu = 0d; // 수온
 
     @Column
-    private Double lightLvelValu = 0d; // 조명 작동 상태
+    private Double ligtLvelValu = 0d; // 조명 작동 상태
 
     @Column
     private Double watrLvelValu = 0d; // 관수 작동 상태

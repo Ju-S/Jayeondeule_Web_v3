@@ -44,7 +44,7 @@ public interface SensorRecordingRepository extends JpaRepository<SensorRecording
             ROUND(AVG(indr_hmdt_valu)::numeric, 2) AS avgIndrHmdt,
             ROUND(AVG(oudr_tprt_valu)::numeric, 2) AS avgOudrTprt,
             ROUND(AVG(oudr_hmdt_valu)::numeric, 2) AS avgOudrHmdt,
-            ROUND(AVG(co2valu)::numeric, 2) AS avgCo2,
+            ROUND(AVG(co2_valu)::numeric, 2) AS avgCo2,
             ROUND(AVG(watr_tprt_valu)::numeric, 2) AS avgWatrTprt
         FROM bucketed
         GROUP BY bucket

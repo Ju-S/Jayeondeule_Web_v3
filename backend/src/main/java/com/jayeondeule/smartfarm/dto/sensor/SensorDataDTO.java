@@ -18,6 +18,6 @@ public class SensorDataDTO {
     private double oudrHmdtValu; // 외부 습도
     private double co2Valu; // 실내 co2
     private double watrTprtValu; // 수온
-    private double lightLvelValu; // 조명 작동 상태
+    private double ligtLvelValu; // 조명 작동 상태
     private double watrLvelValu; // 관수 작동 상태
 }
