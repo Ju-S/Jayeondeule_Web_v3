@@ -7,10 +7,14 @@ import com.jayeondeule.smartfarm.entity.sensor.SensorRecording;
 import com.jayeondeule.smartfarm.repository.SensorRecordingRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -26,7 +30,23 @@ public class SensorService {
 
     //start~end까지의 sensor데이터 조회
     public List<SensorDataDTO> getSensorHistory(long farmId, long houseId, LocalDateTime start, LocalDateTime end) {
-        List<SensorRecording> history = sensorRecordingRepository.findByFarmIdAndHousIdAndRecdDttmBetween(farmId, houseId, start, end);
-        return history.stream().map(item -> mapper.convertValue(item, SensorDataDTO.class)).toList();
+        long maxCount = 1000;
+        List<Object[]> raw = sensorRecordingRepository.findAveragedDownsampled(farmId, houseId, start, end, maxCount);
+
+        return raw.stream()
+                .map(r -> SensorDataDTO.builder()
+                        .recdDttm(((Timestamp) r[0]).toLocalDateTime())
+                        .indrTprtValu(Double.parseDouble(r[1].toString()))
+                        .indrHmdtValu(Double.parseDouble(r[2].toString()))
+                        .oudrTprtValu(Double.parseDouble(r[3].toString()))
+                        .oudrHmdtValu(Double.parseDouble(r[4].toString()))
+                        .co2Valu(Double.parseDouble(r[5].toString()))
+                        .watrTprtValu(Double.parseDouble(r[6].toString()))
+                        .build())
+                .toList();
+    }
+
+    public SensorDataDTO getLatestSensor(long farmId, long houseId) {
+        return mapper.convertValue(sensorRecordingRepository.findTopByFarmIdAndHousIdOrderByRecdDttmDesc(farmId, houseId), SensorDataDTO.class);
     }
 }

@@ -267,6 +267,11 @@ const apiRoutes = {
             url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/sensors?start=${start}&end=${end}`,
             method: "GET"
         }),
+
+        latest: (farmId, houseId) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/sensors/latest`,
+            method: "GET"
+        }),
     },
     settings: {
         /**

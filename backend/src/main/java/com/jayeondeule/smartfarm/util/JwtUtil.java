@@ -2,7 +2,6 @@ package com.jayeondeule.smartfarm.util;
 
 import com.jayeondeule.smartfarm.dto.user.UserClaimDTO;
 import com.jayeondeule.smartfarm.enums.user.AuthLvel;
-import com.jayeondeule.smartfarm.dto.user.UserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;

@@ -1,14 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Card} from "react-bootstrap";
-import {GearFill} from "react-bootstrap-icons";
-import {useNavigate} from "react-router-dom";
 
-export default function LatestSensorMonitor({sensorData, onSettingsClick}) {
-    const latestSensorData = sensorData[sensorData.length - 1];
-
+export default function LatestSensorMonitor({latestSensorData}) {
+    useEffect(() => {
+        console.log(latestSensorData);
+    }, [latestSensorData]);
     return (
         <>
-            {sensorData.length > 0 && (
+            {latestSensorData && (
                 <div style={{position: "relative", marginBottom: "1rem"}}>
                     {/* 카드 바깥 오른쪽 상단에 측정 시간 */}
                     <div style={{

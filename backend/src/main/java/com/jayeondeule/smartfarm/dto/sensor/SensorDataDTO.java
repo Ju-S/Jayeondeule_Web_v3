@@ -1,12 +1,14 @@
 package com.jayeondeule.smartfarm.dto.sensor;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensorDataDTO {
     private LocalDateTime recdDttm; // 측정일자
 

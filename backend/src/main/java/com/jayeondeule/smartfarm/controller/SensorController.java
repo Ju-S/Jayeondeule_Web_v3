@@ -24,7 +24,7 @@ public class SensorController {
     private final SensorService sensorService;
     private final UserService userService;
 
-    //최신 센서 측정 값 조회
+    //센서 측정 기록 조회
     @GetMapping
     public ResponseEntity<List<SensorDataDTO>> getSensorData(@PathVariable Long farmId,
                                                              @PathVariable Long houseId,
@@ -35,6 +35,20 @@ public class SensorController {
             if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
                     userService.getUserOwnedFarmId(userInfo.getUserId()) == farmId) {
                 return ResponseEntity.ok(sensorService.getSensorHistory(farmId, houseId, start, end));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    //최신 센서 측정 기록 조회
+    @GetMapping("/latest")
+    public ResponseEntity<SensorDataDTO> getLatestSensorData(@PathVariable Long farmId,
+                                                             @PathVariable Long houseId,
+                                                             @AuthenticationPrincipal UserClaimDTO userInfo){
+        if (userInfo != null) {
+            if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
+                    userService.getUserOwnedFarmId(userInfo.getUserId()) == farmId) {
+                return ResponseEntity.ok(sensorService.getLatestSensor(farmId, houseId));
             }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

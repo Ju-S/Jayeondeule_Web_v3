@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
 
 import {getHouseList} from "../../utils/houseUtil.js";
-import {getSensorData} from "../../utils/sensorUtil.js";
+import {getLatestSensorData, getSensorData} from "../../utils/sensorUtil.js";
 import {getFarm} from "../../utils/farmUtil.js";
 
 import FarmKebabMenu from "../../components/farm/FarmKebabMenu.jsx";
@@ -59,6 +59,21 @@ export default function FarmMonitoringPage() {
             const endDateTime = `${endDate}T23:59:59`;
             return getSensorData(farmId, selectedHouse, startDateTime, endDateTime).then(res => res.data);
         },
+        enabled: !!selectedHouse,
+    });
+
+    // 선택된 하우스 센서 데이터
+    const {
+        data: latestSensorData = {},
+        isLoading: latestSensorLoading,
+        error: latestSensorError,
+        refetch: refetchLatestSensor
+    } = useQuery({
+        queryKey: ["latestSensorData", farmId, selectedHouse],
+        queryFn: () => {
+            if (!selectedHouse) return [];
+            return getLatestSensorData(farmId, selectedHouse).then(res => res.data);
+        },
         refetchInterval: 5000, // 5초마다 polling
         enabled: !!selectedHouse,
     });
@@ -109,10 +124,9 @@ export default function FarmMonitoringPage() {
             />
 
             {/* 최신 센서 데이터 */}
-            {sensorData &&
-                <LatestSensorMonitor sensorData={sensorData} onSettingsClick={onSettingsClick}/>
+            {!latestSensorLoading &&
+                <LatestSensorMonitor latestSensorData={latestSensorData}/>
             }
-
             {/* 탭 */}
             <Tabs id="custom-tabs">
                 <Tab
@@ -145,7 +159,7 @@ export default function FarmMonitoringPage() {
                     }
                 >
                     {selectedHouse &&
-                        <RelayDashboard farmId={farmId} house={houses[selectedHouse - 1]}/>
+                        <RelayDashboard farmId={farmId} house={houses.find(item => item.housId === selectedHouse)}/>
                     }
                 </Tab>
 
