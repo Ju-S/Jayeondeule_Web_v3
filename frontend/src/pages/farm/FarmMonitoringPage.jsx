@@ -117,7 +117,7 @@ export default function FarmMonitoringPage() {
 
             {/* 재배사 리스트 */}
             <HouseList
-                selectedHouse={selectedHouse.housId}
+                selectedHouse={selectedHouse?.housId}
                 authLvel={auth.userInfo.authLvel}
                 houses={houses}
                 setSelectedHouse={setSelectedHouse}
