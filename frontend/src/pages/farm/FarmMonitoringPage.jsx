@@ -89,6 +89,7 @@ export default function FarmMonitoringPage() {
     useEffect(() => {
         if (!selectedHouse && houses[0] != null) {
             setSelectedHouse(houses[0]);
+            console.log(houses[0]);
         }
     }, [houses]);
 
