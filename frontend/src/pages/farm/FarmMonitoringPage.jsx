@@ -96,6 +96,8 @@ export default function FarmMonitoringPage() {
         navigate(`/farm/${farmId}/house/${selectedHouse}/sensor/setting`);
     }
 
+    const selectedHouseObj = houses.find(item => item.housId === selectedHouse);
+
     if (farmLoading) return <LoadingPage/>;
     if (farmError || housesError || sensorError) return <ErrorPage/>;
 
@@ -158,8 +160,8 @@ export default function FarmMonitoringPage() {
                         </>
                     }
                 >
-                    {houses.find(item => item.housId === selectedHouse) &&
-                        <RelayDashboard farmId={farmId} house={houses.find(item => item.housId === selectedHouse)}/>
+                    {selectedHouseObj &&
+                        <RelayDashboard farmId={farmId} house={selectedHouseObj}/>
                     }
                 </Tab>
 
