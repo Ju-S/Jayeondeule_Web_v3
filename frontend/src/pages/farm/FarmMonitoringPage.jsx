@@ -160,7 +160,7 @@ export default function FarmMonitoringPage() {
                         </>
                     }
                 >
-                    {selectedHouseObj &&
+                    {!housesLoading &&
                         <RelayDashboard farmId={farmId} house={selectedHouseObj}/>
                     }
                 </Tab>
