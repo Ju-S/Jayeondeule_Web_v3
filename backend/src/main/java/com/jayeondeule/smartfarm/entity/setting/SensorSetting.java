@@ -38,10 +38,10 @@ public class SensorSetting {
     @Column(nullable = false)
     private double hmdtMax = 0;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="co2_min")
     private double co2Min = 0;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="co2_max")
     private double co2Max = 0;
 
     @Column(nullable = false)
