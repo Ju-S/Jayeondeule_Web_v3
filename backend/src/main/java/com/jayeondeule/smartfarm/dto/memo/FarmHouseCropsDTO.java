@@ -34,9 +34,6 @@ public class FarmHouseCropsDTO {
     private String athrName; // 작성자 이름
     private String rmks; // 메모
 
-    private String orgn; // 업로드 이미지 파일명
-    private String sstm; // 업로드 이미지 실제 경로
-
     private LocalDateTime cropStrtDate; // 작물 재배 시작 일자
     private LocalDateTime cropEndDate; // 작물 재배 종료 일자
 }

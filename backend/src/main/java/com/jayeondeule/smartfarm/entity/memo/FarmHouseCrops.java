@@ -70,12 +70,6 @@ public class FarmHouseCrops {
     private String rmks; // 설명
 
     @Column
-    private String orgn; // 업로드 이미지 파일명
-
-    @Column
-    private String sstm; // 업로드 이미지 실제 경로
-
-    @Column
     private LocalDateTime cropStrtDate; // 작물 재배 시작 일자
 
     @Column
