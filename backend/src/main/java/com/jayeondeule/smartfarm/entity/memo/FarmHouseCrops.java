@@ -31,34 +31,34 @@ public class FarmHouseCrops {
     @Column
     private int cropQtty;
 
-    @Column(name="crop_grade_qtty_1")
+    @Column(name="crop_grde_qtty_1")
     private int cropGradeQtty1 = 0;
 
-    @Column(name="crop_grade_qtty_2")
+    @Column(name="crop_grde_qtty_2")
     private int cropGradeQtty2 = 0;
 
-    @Column(name="crop_grade_qtty_3")
+    @Column(name="crop_grde_qtty_3")
     private int cropGradeQtty3 = 0;
 
-    @Column(name="crop_grade_qtty_4")
+    @Column(name="crop_grde_qtty_4")
     private int cropGradeQtty4 = 0;
 
-    @Column(name="crop_grade_qtty_5")
+    @Column(name="crop_grde_qtty_5")
     private int cropGradeQtty5 = 0;
 
-    @Column(name="crop_grade_amut_1")
+    @Column(name="crop_grde_amut_1")
     private int cropGradeAmut1 = 0;
 
-    @Column(name="crop_grade_amut_2")
+    @Column(name="crop_grde_amut_2")
     private int cropGradeAmut2 = 0;
 
-    @Column(name="crop_grade_amut_3")
+    @Column(name="crop_grde_amut_3")
     private int cropGradeAmut3 = 0;
 
-    @Column(name="crop_grade_amut_4")
+    @Column(name="crop_grde_amut_4")
     private int cropGradeAmut4 = 0;
 
-    @Column(name="crop_grade_amut_5")
+    @Column(name="crop_grde_amut_5")
     private int cropGradeAmut5 = 0;
 
     @Setter
