@@ -116,15 +116,13 @@ export default function FarmMonitoringPage() {
             </div>
 
             {/* 재배사 리스트 */}
-            {selectedHouse &&
-                <HouseList
-                    selectedHouse={selectedHouse.housId}
-                    authLvel={auth.userInfo.authLvel}
-                    houses={houses}
-                    setSelectedHouse={setSelectedHouse.housId}
-                    farmId={farmId}
-                />
-            }
+            <HouseList
+                selectedHouse={selectedHouse.housId}
+                authLvel={auth.userInfo.authLvel}
+                houses={houses}
+                setSelectedHouse={setSelectedHouse}
+                farmId={farmId}
+            />
 
             {/* 최신 센서 데이터 */}
             {!latestSensorLoading &&
