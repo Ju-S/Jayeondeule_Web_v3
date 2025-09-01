@@ -35,7 +35,7 @@ export default function SensorLineChart({data, lineConfig}) {
     // 3등분으로 tick 선택
     const xTicks = [];
     if (data.length > 0) {
-        const step = Math.max(Math.floor(data.length / 3), 1);
+        const step = Math.max(Math.floor(data.length / 4), 1);
         for (let i = 0; i < data.length - step; i += step) {
             xTicks.push(data[i].recdDttm);
         }
@@ -49,9 +49,9 @@ export default function SensorLineChart({data, lineConfig}) {
                 <XAxis
                     dataKey="recdDttm"
                     ticks={xTicks}
-                    interval={0}
                     tickFormatter={(value) => dayjs(value).format("MM-DD HH:mm")}
                     label={{value: "시간", position: "insideBottomRight", offset: -5}}
+                    interval="preserveStartEnd"
                 />
                 <YAxis/>
                 <Tooltip

@@ -39,7 +39,7 @@ public interface SensorRecordingRepository extends JpaRepository<SensorRecording
             FROM data
         )
         SELECT
-            (to_timestamp(AVG(EXTRACT(EPOCH FROM recd_dttm))::double precision) AT TIME ZONE 'Asia/Seoul') AS avg_time,
+            (to_timestamp(AVG(EXTRACT(EPOCH FROM recd_dttm))::double precision) AT TIME ZONE 'UTC') AS avg_time,
             ROUND(AVG(indr_tprt_valu)::numeric, 2) AS avgIndrTprt,
             ROUND(AVG(indr_hmdt_valu)::numeric, 2) AS avgIndrHmdt,
             ROUND(AVG(oudr_tprt_valu)::numeric, 2) AS avgOudrTprt,

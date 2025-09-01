@@ -2,9 +2,6 @@ import React, {useEffect} from "react";
 import {Button, Card} from "react-bootstrap";
 
 export default function LatestSensorMonitor({latestSensorData}) {
-    useEffect(() => {
-        console.log(latestSensorData);
-    }, [latestSensorData]);
     return (
         <>
             {latestSensorData && (
