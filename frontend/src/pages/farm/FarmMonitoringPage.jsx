@@ -52,7 +52,7 @@ export default function FarmMonitoringPage() {
         error: sensorError,
         refetch: refetchSensor
     } = useQuery({
-        queryKey: ["sensorData", farmId, selectedHouse.housId],
+        queryKey: ["sensorData", farmId, selectedHouse],
         queryFn: () => {
             if (!selectedHouse) return [];
             const startDateTime = `${startDate}T00:00:00`;
@@ -69,7 +69,7 @@ export default function FarmMonitoringPage() {
         error: latestSensorError,
         refetch: refetchLatestSensor
     } = useQuery({
-        queryKey: ["latestSensorData", farmId, selectedHouse.housId],
+        queryKey: ["latestSensorData", farmId, selectedHouse],
         queryFn: () => {
             if (!selectedHouse) return [];
             return getLatestSensorData(farmId, selectedHouse.housId).then(res => res.data);
