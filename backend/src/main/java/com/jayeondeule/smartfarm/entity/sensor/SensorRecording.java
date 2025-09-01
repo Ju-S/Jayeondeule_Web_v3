@@ -33,7 +33,7 @@ public class SensorRecording {
     @Column
     private Double oudrHmdtValu = 0d; // 외부 습도
 
-    @Column
+    @Column(name="co2_valu")
     private Double co2Valu = 0d; // 실내 co2
 
     @Column
