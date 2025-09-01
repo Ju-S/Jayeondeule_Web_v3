@@ -87,7 +87,7 @@ export default function FarmMonitoringPage() {
 
     // selectedHouse 초기값
     useEffect(() => {
-        if (!selectedHouse && houses.length > 0) {
+        if (!selectedHouse && houses[0] != null) {
             setSelectedHouse(houses[0]);
         }
     }, [houses]);
