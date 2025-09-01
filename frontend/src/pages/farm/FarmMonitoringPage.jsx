@@ -52,12 +52,12 @@ export default function FarmMonitoringPage() {
         error: sensorError,
         refetch: refetchSensor
     } = useQuery({
-        queryKey: ["sensorData", farmId, selectedHouse],
+        queryKey: ["sensorData", farmId, selectedHouse.housId],
         queryFn: () => {
             if (!selectedHouse) return [];
             const startDateTime = `${startDate}T00:00:00`;
             const endDateTime = `${endDate}T23:59:59`;
-            return getSensorData(farmId, selectedHouse, startDateTime, endDateTime).then(res => res.data);
+            return getSensorData(farmId, selectedHouse.housId, startDateTime, endDateTime).then(res => res.data);
         },
         enabled: !!selectedHouse,
     });
@@ -69,10 +69,10 @@ export default function FarmMonitoringPage() {
         error: latestSensorError,
         refetch: refetchLatestSensor
     } = useQuery({
-        queryKey: ["latestSensorData", farmId, selectedHouse],
+        queryKey: ["latestSensorData", farmId, selectedHouse.housId],
         queryFn: () => {
             if (!selectedHouse) return [];
-            return getLatestSensorData(farmId, selectedHouse).then(res => res.data);
+            return getLatestSensorData(farmId, selectedHouse.housId).then(res => res.data);
         },
         refetchInterval: 5000, // 5초마다 polling
         enabled: !!selectedHouse,
@@ -88,15 +88,13 @@ export default function FarmMonitoringPage() {
     // selectedHouse 초기값
     useEffect(() => {
         if (!selectedHouse && houses.length > 0) {
-            setSelectedHouse(houses[0].housId);
+            setSelectedHouse(houses[0]);
         }
     }, [houses]);
 
     const onSettingsClick = () => {
-        navigate(`/farm/${farmId}/house/${selectedHouse}/sensor/setting`);
+        navigate(`/farm/${farmId}/house/${selectedHouse.housId}/sensor/setting`);
     }
-
-    const selectedHouseObj = houses.find(item => item.housId === selectedHouse);
 
     if (farmLoading) return <LoadingPage/>;
     if (farmError || housesError || sensorError) return <ErrorPage/>;
@@ -118,10 +116,10 @@ export default function FarmMonitoringPage() {
 
             {/* 재배사 리스트 */}
             <HouseList
-                selectedHouse={selectedHouse}
+                selectedHouse={selectedHouse.housId}
                 authLvel={auth.userInfo.authLvel}
                 houses={houses}
-                setSelectedHouse={setSelectedHouse}
+                setSelectedHouse={setSelectedHouse.housId}
                 farmId={farmId}
             />
 
@@ -160,8 +158,8 @@ export default function FarmMonitoringPage() {
                         </>
                     }
                 >
-                    {!housesLoading &&
-                        <RelayDashboard farmId={farmId} house={selectedHouseObj}/>
+                    {selectedHouse &&
+                        <RelayDashboard farmId={farmId} house={selectedHouse}/>
                     }
                 </Tab>
 
@@ -176,7 +174,7 @@ export default function FarmMonitoringPage() {
                 >
                     {/* 메모 컴포넌트 */}
                     {selectedHouse &&
-                        <MemoDashboard farmId={farmId} houseId={selectedHouse}/>
+                        <MemoDashboard farmId={farmId} houseId={selectedHouse.housId}/>
                     }
                 </Tab>
 
@@ -190,7 +188,7 @@ export default function FarmMonitoringPage() {
                     }
                 >
                     {selectedHouse &&
-                        <SensorSettingDashboard farmId={farmId} selectedHouse={selectedHouse}/>
+                        <SensorSettingDashboard farmId={farmId} selectedHouse={selectedHouse.housId}/>
                     }
                 </Tab>
             </Tabs>
