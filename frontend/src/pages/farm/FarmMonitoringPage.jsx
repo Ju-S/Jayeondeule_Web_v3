@@ -158,7 +158,7 @@ export default function FarmMonitoringPage() {
                         </>
                     }
                 >
-                    {selectedHouse &&
+                    {houses.find(item => item.housId === selectedHouse) &&
                         <RelayDashboard farmId={farmId} house={houses.find(item => item.housId === selectedHouse)}/>
                     }
                 </Tab>

@@ -30,10 +30,10 @@ export default function RelayDashboard({ farmId, house }) {
 
     // relay 상태 조회 (polling)
     const { data: relayStatus = {}, isLoading: isRelayLoading, error: relayError } = useQuery({
-        queryKey: ["relayStatus", farmId, house?.housId],
+        queryKey: ["relayStatus", farmId, house.housId],
         queryFn: () => getRelayStatus(farmId, house.housId).then(res => res.data),
         refetchInterval: 5000,
-        enabled: !!farmId && !!house?.housId,
+        enabled: !!farmId && !!house.housId,
     });
 
     // relay toggle mutation
@@ -66,8 +66,8 @@ export default function RelayDashboard({ farmId, house }) {
     return (
         <div>
             <Row className="mt-4 d-flex justify-content-center">
-                <Col xs={6} md={4} lg={3} key={house?.housId} className="mb-3">
-                    <Card className={`text-center shadow-sm ${house?.mnulCtrlFlag ? "border-warning" : "border-success"}`}>
+                <Col xs={6} md={4} lg={3} key={house.housId} className="mb-3">
+                    <Card className={`text-center shadow-sm ${house.mnulCtrlFlag ? "border-warning" : "border-success"}`}>
                         <Card.Body className="position-relative">
                             <div style={{ position: "absolute", top: "0.2rem", right: "0.35rem", zIndex: 10 }}>
                                 <OverlayTrigger
@@ -84,12 +84,12 @@ export default function RelayDashboard({ farmId, house }) {
                             </div>
                             <Card.Title className="mb-2">작동방식</Card.Title>
                             <Button
-                                variant={house?.mnulCtrlFlag ? "warning" : "success"}
+                                variant={house.mnulCtrlFlag ? "warning" : "success"}
                                 className="w-100"
                                 onClick={handleToggleMode}
                                 disabled={toggleModeMutation.isLoading}
                             >
-                                {house?.mnulCtrlFlag ? "수동" : "자동"}
+                                {house.mnulCtrlFlag ? "수동" : "자동"}
                             </Button>
                         </Card.Body>
                     </Card>
@@ -103,7 +103,7 @@ export default function RelayDashboard({ farmId, house }) {
                         label={item.label}
                         relayNum={item.num}
                         relayStatus={relayStatus}
-                        manualMode={house?.mnulCtrlFlag}
+                        manualMode={house.mnulCtrlFlag}
                         handleToggle={handleToggleRelay}
                         toggleRelayMutation={toggleRelayMutation}
                     />
