@@ -34,7 +34,7 @@ public interface SensorRecordingRepository extends JpaRepository<SensorRecording
                 indr_hmdt_valu,
                 oudr_tprt_valu,
                 oudr_hmdt_valu,
-                co2valu,
+                co2_valu,
                 watr_tprt_valu
             FROM data
         )
