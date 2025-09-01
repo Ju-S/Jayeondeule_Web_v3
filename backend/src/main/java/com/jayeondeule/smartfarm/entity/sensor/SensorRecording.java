@@ -22,26 +22,26 @@ public class SensorRecording {
     private LocalDateTime recdDttm = LocalDateTime.now(); // 측정일자
 
     @Column
-    private double indrTprtValu = 0; // 실내 온도
+    private Double indrTprtValu = 0d; // 실내 온도
 
     @Column
-    private double indrHmdtValu = 0; // 실내 습도
+    private Double indrHmdtValu = 0d; // 실내 습도
 
     @Column
-    private double oudrTprtValu = 0; // 외부 온도
+    private Double oudrTprtValu = 0d; // 외부 온도
 
     @Column
-    private double oudrHmdtValu = 0; // 외부 습도
+    private Double oudrHmdtValu = 0d; // 외부 습도
 
     @Column
-    private double co2Valu = 0; // 실내 co2
+    private Double co2Valu = 0d; // 실내 co2
 
     @Column
-    private double watrTprtValu = 0; // 수온
+    private Double watrTprtValu = 0d; // 수온
 
     @Column
-    private double lightLvelValu = 0; // 조명 작동 상태
+    private Double lightLvelValu = 0d; // 조명 작동 상태
 
     @Column
-    private double watrLvelValu = 0; // 관수 작동 상태
+    private Double watrLvelValu = 0d; // 관수 작동 상태
 }
