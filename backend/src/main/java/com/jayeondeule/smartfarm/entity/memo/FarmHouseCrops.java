@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @IdClass(FarmHouseCropsId.class)
-@Table(name = "FARMHOUSE_I_CROPS")
+@Table(name = "FARMHOUSE_L_CROPS")
 public class FarmHouseCrops {
     // FARMHOUSE_I_CROPS 테이블에 대응하는 엔티티
 
