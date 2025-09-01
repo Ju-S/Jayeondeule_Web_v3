@@ -160,7 +160,7 @@ export default function FarmMonitoringPage() {
                 >
                     {/* 메모 컴포넌트 */}
                     {selectedHouse &&
-                        <MemoDashboard farmId={farmId} houseId={houses[selectedHouse - 1].housId}/>
+                        <MemoDashboard farmId={farmId} houseId={selectedHouse}/>
                     }
                 </Tab>
 
@@ -173,7 +173,9 @@ export default function FarmMonitoringPage() {
                         </>
                     }
                 >
-                    <SensorSettingDashboard/>
+                    {selectedHouse &&
+                        <SensorSettingDashboard farmId={farmId} selectedHouse={selectedHouse}/>
+                    }
                 </Tab>
             </Tabs>
         </Container>

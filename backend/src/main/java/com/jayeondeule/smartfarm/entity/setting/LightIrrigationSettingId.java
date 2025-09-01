@@ -1,14 +1,17 @@
 package com.jayeondeule.smartfarm.entity.setting;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LightIrrigationSettingId implements Serializable {
     private Long farmId;
     private Long housId;

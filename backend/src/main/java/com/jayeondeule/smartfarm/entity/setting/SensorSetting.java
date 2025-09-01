@@ -4,6 +4,7 @@ import com.jayeondeule.smartfarm.entity.farm.Farm;
 import com.jayeondeule.smartfarm.entity.house.FarmHouse;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +14,11 @@ import java.time.LocalDateTime;
 @Table(name = "SENSOR_M_SETTING")
 public class SensorSetting {
     //SENSORM_SETTING 테이블 (온도, 습도, co2 등 설정 값)
+    @Setter
     @Id
     private long farmId;
 
+    @Setter
     @Id
     private long housId; // 설정이 속한 재배사
 

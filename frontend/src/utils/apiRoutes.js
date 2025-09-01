@@ -297,9 +297,20 @@ const apiRoutes = {
          * pathVariable: {farmId, houseId, setDttm}<br>
          * body: {LightIrrigationSettingPatchDTO}
          */
-        update: (farmId, houseId) => ({
-            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings/${setDttm}`,
+        update: (farmId, houseId, setnDttm) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings/${setnDttm}`,
             method: "PATCH"
+        }),
+
+        /**
+         * 관수, 조명 설정 삭제 API<br>
+         * DELETE /api/setting<br>
+         * pathVariable: {farmId, houseId, setDttm}<br>
+         * body: {LightIrrigationSettingPatchDTO}
+         */
+        delete: (farmId, houseId, setnDttm) => ({
+            url: `${BASE_URL}/farms/${farmId}/houses/${houseId}/settings/${setnDttm}`,
+            method: "DELETE"
         }),
     },
 };

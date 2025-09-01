@@ -42,14 +42,6 @@ export default function CommonRoutes() {
                     </PrivateRoute>
                 }
             />
-            <Route
-                path="/farm/:farmId/house/:houseId/sensor/setting"
-                element={
-                    <PrivateRoute>
-                        <SensorSettingDashboard/>
-                    </PrivateRoute>
-                }
-            />
             <Route path="*" element={<ErrorPage/>}/>
         </Routes>
     )

@@ -99,7 +99,7 @@ export default function MyPage() {
                         </Col>
                         <Col>
                             <div className="d-flex justify-content-end mt-3">
-                                <InputGroup>
+                                <InputGroup className="w-auto">
                                     <Button variant="success" type="submit">
                                         수정하기
                                     </Button>

@@ -18,7 +18,9 @@ import java.util.Map;
 public class JwtUtil {
 
     private final Key key;
-    private final long accessTokenValidity = 1000L * 60 * 120; // 120분
+//    private final long accessTokenValidity = 1000L * 60 * 60 * 2; // 2시간
+    private final long accessTokenValidity = 1000L * 60 * 60 * 24 * 7; // 7일(임시)
+//    private final long refreshTokenValidity = 1000L * 60 * 60 * 24 * 7; // 7일
 
     public JwtUtil(@Value("${jwt.secret}") String secretKey) {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
