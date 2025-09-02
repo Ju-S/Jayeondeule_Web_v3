@@ -16,7 +16,7 @@ export default function HouseList({houses, selectedHouse, setSelectedHouse, auth
 
     return (
         <div className="d-inline-flex align-items-start mb-3">
-            <InputGroup className="mb-3">
+            <InputGroup>
                 {/* 드롭다운 */}
                 <Dropdown onSelect={(key) => setSelectedHouse(houses.find((h) => h.housId == key))}>
                     <Dropdown.Toggle variant="outline-success">

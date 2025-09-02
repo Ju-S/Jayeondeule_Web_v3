@@ -123,17 +123,18 @@ export default function FarmMonitoringPage() {
             />
 
             {/* 최신 센서 데이터 */}
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0" className="mb-3">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>
                         재배사 최신 센서 데이터
                     </Accordion.Header>
                     <Accordion.Body>
                         {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => {
-                            if (!houses[key]) return null;
+                            const house = houses.find(h => h.housId === Number(key));
+                            if (!house) return null;
                             return (
                                 <LatestSensorMonitor latestSensorData={value}
-                                                     houseName={houses[key].housName}/>
+                                                     houseName={house.housName}/>
                             )
                         })}
                     </Accordion.Body>
