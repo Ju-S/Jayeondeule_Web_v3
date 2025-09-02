@@ -122,8 +122,12 @@ export default function FarmMonitoringPage() {
                 farmId={farmId}
             />
 
+            {/* 최신 센서 데이터 */}
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                        재배사 최신 센서 데이터
+                    </Accordion.Header>
                     <Accordion.Body>
                         {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => {
                             if (!houses[key]) return null;
@@ -136,14 +140,7 @@ export default function FarmMonitoringPage() {
                 </Accordion.Item>
             </Accordion>
 
-            {/* 최신 센서 데이터 */
-            }
-            {
-                !latestSensorLoading &&
-                <LatestSensorMonitor latestSensorData={latestSensorData}/>
-            }
-            {/* 탭 */
-            }
+            {/* 탭 */}
             <Tabs id="custom-tabs">
                 <Tab
                     eventKey="sensor"

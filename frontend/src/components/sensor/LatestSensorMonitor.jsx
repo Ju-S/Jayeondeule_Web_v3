@@ -5,7 +5,7 @@ export default function LatestSensorMonitor({latestSensorData, houseName}) {
     return (
         <>
             {latestSensorData && (
-                <div style={{position: "relative", marginBottom: "1rem"}}>
+                <div style={{position: "relative", marginBottom: "1rem", marginTop: "2rem"}}>
                     {/* 카드 바깥 오른쪽 상단에 측정 시간 */}
                     <div style={{
                         position: "absolute",
