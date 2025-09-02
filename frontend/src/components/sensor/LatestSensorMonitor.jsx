@@ -69,26 +69,26 @@ export default function LatestSensorMonitor({latestSensorData, houseName}) {
                             <tbody>
                             {/* PC용 한 줄 */}
                             <tr className="d-none d-md-table-row">
-                                <td>{Math.round(latestSensorData.indrTprtValu * 100) * 100 + "℃" ?? "-"}</td>
-                                <td>{Math.round(latestSensorData.oudrTprtValu * 100) * 100 + "℃" ?? "-"}</td>
-                                <td>{Math.round(latestSensorData.indrHmdtValu * 100) * 100 + "%" ?? "-"}</td>
-                                <td>{Math.round(latestSensorData.oudrHmdtValu * 100) * 100 + "%" ?? "-"}</td>
-                                <td>{Math.round(latestSensorData.co2Valu * 100) * 100 + "ppm" ?? "-"}</td>
-                                <td>{Math.round(latestSensorData.watrTprtValu * 100) * 100 + "℃" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.indrTprtValu * 100) / 100 + "℃" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.oudrTprtValu * 100) / 100 + "℃" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.indrHmdtValu * 100) / 100 + "%" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.oudrHmdtValu * 100) / 100 + "%" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.co2Valu * 100) / 100 + "ppm" ?? "-"}</td>
+                                <td>{Math.round(latestSensorData.watrTprtValu * 100) / 100 + "℃" ?? "-"}</td>
                             </tr>
 
                             {/* 모바일용 2열씩 3줄 */}
                             <tr className="d-md-none">
-                                <td><b>실내 온도:</b> {Math.round(latestSensorData.indrTprtValu * 100) * 100 + "℃"  ?? "-"}</td>
-                                <td><b>실외 온도:</b> {Math.round(latestSensorData.oudrTprtValu * 100) * 100 + "℃"  ?? "-"}</td>
+                                <td><b>실내 온도:</b> {Math.round(latestSensorData.indrTprtValu * 100) / 100 + "℃"  ?? "-"}</td>
+                                <td><b>실외 온도:</b> {Math.round(latestSensorData.oudrTprtValu * 100) / 100 + "℃"  ?? "-"}</td>
                             </tr>
                             <tr className="d-md-none">
-                                <td><b>실내 습도:</b> {Math.round(latestSensorData.indrHmdtValu * 100) * 100 + "%"  ?? "-"}</td>
-                                <td><b>실외 습도:</b> {Math.round(latestSensorData.oudrHmdtValu * 100) * 100 + "%"  ?? "-"}</td>
+                                <td><b>실내 습도:</b> {Math.round(latestSensorData.indrHmdtValu * 100) / 100 + "%"  ?? "-"}</td>
+                                <td><b>실외 습도:</b> {Math.round(latestSensorData.oudrHmdtValu * 100) / 100 + "%"  ?? "-"}</td>
                             </tr>
                             <tr className="d-md-none">
-                                <td><b>CO2:</b> {Math.round(latestSensorData.co2Valu * 100) * 100 + "ppm"  ?? "-"}</td>
-                                <td><b>수온:</b> {Math.round(latestSensorData.watrTprtValu * 100) * 100 + "℃"  ?? "-"}</td>
+                                <td><b>CO2:</b> {Math.round(latestSensorData.co2Valu * 100) / 100 + "ppm"  ?? "-"}</td>
+                                <td><b>수온:</b> {Math.round(latestSensorData.watrTprtValu * 100) / 100 + "℃"  ?? "-"}</td>
                             </tr>
                             </tbody>
                         </table>
