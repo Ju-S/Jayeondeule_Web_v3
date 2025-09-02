@@ -15,7 +15,7 @@ export default function RelayDashboard({farmId, house}) {
     const [relayLabels, setRelayLabels] = useState([]);
 
     useEffect(() => {
-        if (farmId === 1 && house.housId === 2) {
+        if (farmId == 1 && house.housId == 2) {
             // 릴레이 라벨(2동 임시)
             setRelayLabels([
                 {label: "흡입팬(7)", num: 7},
@@ -48,7 +48,7 @@ export default function RelayDashboard({farmId, house}) {
                 {label: "히터밸브(15)", num: 15},
             ]);
         }
-    }, [farmId, house])
+    }, [house])
 
     // relay 상태 조회 (polling)
     const {data: relayStatus = {}, isLoading: isRelayLoading, error: relayError} = useQuery({
