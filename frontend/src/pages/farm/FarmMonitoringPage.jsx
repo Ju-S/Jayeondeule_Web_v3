@@ -88,7 +88,6 @@ export default function FarmMonitoringPage() {
     useEffect(() => {
         if (!selectedHouse && houses[0] != null) {
             setSelectedHouse(houses[0]);
-            console.log(houses[0]);
         }
     }, [houses]);
 
@@ -124,23 +123,27 @@ export default function FarmMonitoringPage() {
             />
 
             <Accordion defaultActiveKey="0">
-                {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => (
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Body>
-                            {houses[key] &&
+                <Accordion.Item eventKey="0">
+                    <Accordion.Body>
+                        {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => {
+                            if (!houses[key]) return null;
+                            return (
                                 <LatestSensorMonitor latestSensorData={value}
                                                      houseName={houses[key].housName}/>
-                            }
-                        </Accordion.Body>
-                    </Accordion.Item>
-                ))}
+                            )
+                        })}
+                    </Accordion.Body>
+                </Accordion.Item>
             </Accordion>
 
-            {/* 최신 센서 데이터 */}
-            {!latestSensorLoading &&
+            {/* 최신 센서 데이터 */
+            }
+            {
+                !latestSensorLoading &&
                 <LatestSensorMonitor latestSensorData={latestSensorData}/>
             }
-            {/* 탭 */}
+            {/* 탭 */
+            }
             <Tabs id="custom-tabs">
                 <Tab
                     eventKey="sensor"
@@ -206,5 +209,6 @@ export default function FarmMonitoringPage() {
                 </Tab>
             </Tabs>
         </Container>
-    );
+    )
+
 }
