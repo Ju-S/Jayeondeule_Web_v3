@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {Container, Tabs, Tab} from "react-bootstrap";
+import {Container, Tabs, Tab, Accordion} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
 
@@ -122,6 +122,19 @@ export default function FarmMonitoringPage() {
                 setSelectedHouse={setSelectedHouse}
                 farmId={farmId}
             />
+
+            <Accordion defaultActiveKey="0">
+                {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => (
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Body>
+                            {houses[key] &&
+                                <LatestSensorMonitor latestSensorData={value}
+                                                     houseName={houses[key].housName}/>
+                            }
+                        </Accordion.Body>
+                    </Accordion.Item>
+                ))}
+            </Accordion>
 
             {/* 최신 센서 데이터 */}
             {!latestSensorLoading &&
