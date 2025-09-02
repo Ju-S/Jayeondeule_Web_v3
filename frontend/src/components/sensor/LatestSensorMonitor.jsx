@@ -69,26 +69,26 @@ export default function LatestSensorMonitor({latestSensorData, houseName}) {
                             <tbody>
                             {/* PC용 한 줄 */}
                             <tr className="d-none d-md-table-row">
-                                <td>{latestSensorData.indrTprtValu + "℃" ?? "-"}</td>
-                                <td>{latestSensorData.oudrTprtValu + "℃" ?? "-"}</td>
-                                <td>{latestSensorData.indrHmdtValu + "%" ?? "-"}</td>
-                                <td>{latestSensorData.oudrHmdtValu + "%" ?? "-"}</td>
-                                <td>{latestSensorData.co2Valu + "ppm" ?? "-"}</td>
-                                <td>{latestSensorData.watrTprtValu + "℃" ?? "-"}</td>
+                                <td>{Number(latestSensorData.indrTprtValu).toFixed(2) + "℃" ?? "-"}</td>
+                                <td>{Number(latestSensorData.oudrTprtValu).toFixed(2) + "℃" ?? "-"}</td>
+                                <td>{Number(latestSensorData.indrHmdtValu).toFixed(2) + "%" ?? "-"}</td>
+                                <td>{Number(latestSensorData.oudrHmdtValu).toFixed(2) + "%" ?? "-"}</td>
+                                <td>{Number(latestSensorData.co2Valu).toFixed(2) + "ppm" ?? "-"}</td>
+                                <td>{Number(latestSensorData.watrTprtValu).toFixed(2) + "℃" ?? "-"}</td>
                             </tr>
 
                             {/* 모바일용 2열씩 3줄 */}
                             <tr className="d-md-none">
-                                <td><b>실내 온도:</b> {latestSensorData.indrTprtValu + "℃"  ?? "-"}</td>
-                                <td><b>실외 온도:</b> {latestSensorData.oudrTprtValu + "℃"  ?? "-"}</td>
+                                <td><b>실내 온도:</b> {Number(latestSensorData.indrTprtValu).toFixed(2) + "℃"  ?? "-"}</td>
+                                <td><b>실외 온도:</b> {Number(latestSensorData.oudrTprtValu).toFixed(2) + "℃"  ?? "-"}</td>
                             </tr>
                             <tr className="d-md-none">
-                                <td><b>실내 습도:</b> {latestSensorData.indrHmdtValu + "%"  ?? "-"}</td>
-                                <td><b>실외 습도:</b> {latestSensorData.oudrHmdtValu + "%"  ?? "-"}</td>
+                                <td><b>실내 습도:</b> {Number(latestSensorData.indrHmdtValu).toFixed(2) + "%"  ?? "-"}</td>
+                                <td><b>실외 습도:</b> {Number(latestSensorData.oudrHmdtValu).toFixed(2) + "%"  ?? "-"}</td>
                             </tr>
                             <tr className="d-md-none">
-                                <td><b>CO2:</b> {latestSensorData.co2Valu + "ppm"  ?? "-"}</td>
-                                <td><b>수온:</b> {latestSensorData.watrTprtValu + "℃"  ?? "-"}</td>
+                                <td><b>CO2:</b> {Number(latestSensorData.co2Valu).toFixed(2) + "ppm"  ?? "-"}</td>
+                                <td><b>수온:</b> {Number(latestSensorData.watrTprtValu).toFixed(2) + "℃"  ?? "-"}</td>
                             </tr>
                             </tbody>
                         </table>
