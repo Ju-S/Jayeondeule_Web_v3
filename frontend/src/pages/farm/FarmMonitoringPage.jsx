@@ -159,8 +159,8 @@ export default function FarmMonitoringPage() {
                     eventKey="sensor"
                     title={
                         <>
-                            <span className="d-none d-sm-inline">센서 기록 조회</span>
-                            <span className="d-inline d-sm-none">센서</span>
+                            <span className="d-none d-md-inline">센서 기록 조회</span>
+                            <span className="d-inline d-md-none">센서</span>
                         </>
                     }
                 >
@@ -179,8 +179,8 @@ export default function FarmMonitoringPage() {
                     eventKey="relay"
                     title={
                         <>
-                            <span className="d-none d-sm-inline">릴레이 현황 및 조작</span>
-                            <span className="d-inline d-sm-none">릴레이</span>
+                            <span className="d-none d-md-inline">릴레이 현황 및 조작</span>
+                            <span className="d-inline d-md-none">릴레이</span>
                         </>
                     }
                 >
@@ -193,8 +193,8 @@ export default function FarmMonitoringPage() {
                     eventKey="memo"
                     title={
                         <>
-                            <span className="d-none d-sm-inline">재배사 메모</span>
-                            <span className="d-inline d-sm-none">메모</span>
+                            <span className="d-none d-md-inline">재배사 메모</span>
+                            <span className="d-inline d-md-none">메모</span>
                         </>
                     }
                 >
@@ -208,8 +208,8 @@ export default function FarmMonitoringPage() {
                     eventKey="sensorSetting"
                     title={
                         <>
-                            <span className="d-none d-sm-inline">설정</span>
-                            <span className="d-inline d-sm-none">설정</span>
+                            <span className="d-none d-md-inline">설정</span>
+                            <span className="d-inline d-md-none">설정</span>
                         </>
                     }
                 >
