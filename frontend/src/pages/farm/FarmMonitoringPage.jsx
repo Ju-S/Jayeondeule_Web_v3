@@ -116,7 +116,7 @@ export default function FarmMonitoringPage() {
             </div>
 
             {/* 최신 센서 데이터 */}
-            <Accordion onClick={() => setIsAccordionOpened(true)} defaultActiveKey="0" className="mb-3">
+            <Accordion onSelect={(key) => setIsAccordionOpened(key)} defaultActiveKey="0" className="mb-3">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>
                         <span style={{fontWeight: "bold"}}>실시간 재배사 현황</span>
@@ -135,7 +135,7 @@ export default function FarmMonitoringPage() {
             </Accordion>
 
             {/* 선택된 재배사 최신 센서 데이터 */}
-            {isAccordionOpened && !latestSensorLoading && selectedHouse && Object.entries(latestSensorData).map(([key, value]) => {
+            {isAccordionOpened === null && !latestSensorLoading && selectedHouse && (() => {
                 const house = houses.find(h => h.housId === Number(selectedHouse.housId));
                 if (!house) return null;
                 return (
