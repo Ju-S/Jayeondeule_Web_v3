@@ -142,7 +142,7 @@ export default function FarmMonitoringPage() {
                     <LatestSensorMonitor latestSensorData={data}
                                          houseName={selectedHouse.housName}/>
                 )
-            })}
+            })()}
 
             {/* 재배사 리스트 */}
             <HouseList
