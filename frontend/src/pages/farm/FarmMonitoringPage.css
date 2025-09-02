@@ -2,3 +2,7 @@
 #custom-tabs .nav-link:not(.active) {
     color: #198754; /* 원하는 색상으로 변경 */
 }
+
+#custom-tabs .nav {
+    justify-content: flex-end;
+}
