@@ -136,11 +136,11 @@ export default function FarmMonitoringPage() {
 
             {/* 선택된 재배사 최신 센서 데이터 */}
             {isAccordionOpened === null && !latestSensorLoading && selectedHouse && (() => {
-                const house = houses.find(h => h.housId === Number(selectedHouse.housId));
-                if (!house) return null;
+                const data = latestSensorData[selectedHouse.housId];
+                if (!data) return null;
                 return (
-                    <LatestSensorMonitor latestSensorData={value}
-                                         houseName={house.housName}/>
+                    <LatestSensorMonitor latestSensorData={data}
+                                         houseName={selectedHouse.housName}/>
                 )
             })}
 
