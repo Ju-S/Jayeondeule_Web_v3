@@ -101,10 +101,10 @@ export default function FarmManagementPage() {
                 </thead>
                 <tbody>
                 {filteredFarms.map((farm, index) => (
-                    <tr key={farm.farmId} ref={filteredFarms.length === index + 1 ? lastFarmRef : null}>
+                    <tr key={farm.farmId} ref={filteredFarms.length === index + 1 ? lastFarmRef : null}
+                        onClick={() => navigate(`/farm/${farm.farmId}/monitor`)}>
                         <td className="text-success"
-                            style={{verticalAlign: "middle", cursor: "pointer"}}
-                            onClick={() => navigate(`/farm/${farm.farmId}/monitor`)}>
+                            style={{verticalAlign: "middle", cursor: "pointer"}}>
                             {farm.farmId}
                         </td>
 
