@@ -56,12 +56,16 @@ public class SensorService {
         List<FarmHouse> houseList = farmHouseRepository.findAllByFarmId(farmId);
         Map<Long, SensorDataDTO> result = new HashMap<>();
 
-        houseList.stream().map(item ->
+        houseList.forEach(item -> {
+            SensorRecording latestRecord = sensorRecordingRepository.findTopByFarmIdAndHousIdOrderByRecdDttmDesc(farmId, item.getHousId());
+
+            if(latestRecord != null) {
                 result.put(
                         item.getHousId(),
-                        mapper.convertValue(sensorRecordingRepository.findTopByFarmIdAndHousIdOrderByRecdDttmDesc(farmId, item.getHousId()), SensorDataDTO.class)
-                )
-        );
+                        mapper.convertValue(latestRecord, SensorDataDTO.class)
+                );
+            }
+        });
 
         return result;
     }
