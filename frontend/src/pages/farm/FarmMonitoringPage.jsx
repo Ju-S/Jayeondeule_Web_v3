@@ -26,6 +26,8 @@ export default function FarmMonitoringPage() {
     const auth = useSelector(state => state.auth);
     const navigate = useNavigate();
 
+    const [isAccordionOpened, setIsAccordionOpened] = useState(true);
+
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
     const [endDate, setEndDate] = useState(new Date().toISOString().split("T")[0]);
@@ -114,7 +116,7 @@ export default function FarmMonitoringPage() {
             </div>
 
             {/* 최신 센서 데이터 */}
-            <Accordion onClick={} defaultActiveKey="0" className="mb-3">
+            <Accordion onClick={() => setIsAccordionOpened(true)} defaultActiveKey="0" className="mb-3">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>
                         <span style={{fontWeight: "bold"}}>실시간 재배사 현황</span>
@@ -133,7 +135,7 @@ export default function FarmMonitoringPage() {
             </Accordion>
 
             {/* 선택된 재배사 최신 센서 데이터 */}
-            {!latestSensorLoading && selectedHouse && Object.entries(latestSensorData).map(([key, value]) => {
+            {isAccordionOpened && !latestSensorLoading && selectedHouse && Object.entries(latestSensorData).map(([key, value]) => {
                 const house = houses.find(h => h.housId === Number(selectedHouse.housId));
                 if (!house) return null;
                 return (
