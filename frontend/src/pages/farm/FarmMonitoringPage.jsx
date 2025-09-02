@@ -113,20 +113,11 @@ export default function FarmMonitoringPage() {
                 )}
             </div>
 
-            {/* 재배사 리스트 */}
-            <HouseList
-                selectedHouse={selectedHouse?.housId}
-                authLvel={auth.userInfo.authLvel}
-                houses={houses}
-                setSelectedHouse={setSelectedHouse}
-                farmId={farmId}
-            />
-
             {/* 최신 센서 데이터 */}
-            <Accordion defaultActiveKey="0" className="mb-3">
+            <Accordion onClick={} defaultActiveKey="0" className="mb-3">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>
-                        재배사 최신 센서 데이터
+                        <span style={{fontWeight: "bold"}}>실시간 재배사 현황</span>
                     </Accordion.Header>
                     <Accordion.Body>
                         {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => {
@@ -140,6 +131,25 @@ export default function FarmMonitoringPage() {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+
+            {/* 선택된 재배사 최신 센서 데이터 */}
+            {!latestSensorLoading && selectedHouse && Object.entries(latestSensorData).map(([key, value]) => {
+                const house = houses.find(h => h.housId === Number(selectedHouse.housId));
+                if (!house) return null;
+                return (
+                    <LatestSensorMonitor latestSensorData={value}
+                                         houseName={house.housName}/>
+                )
+            })}
+
+            {/* 재배사 리스트 */}
+            <HouseList
+                selectedHouse={selectedHouse?.housId}
+                authLvel={auth.userInfo.authLvel}
+                houses={houses}
+                setSelectedHouse={setSelectedHouse}
+                farmId={farmId}
+            />
 
             {/* 탭 */}
             <Tabs id="custom-tabs">
