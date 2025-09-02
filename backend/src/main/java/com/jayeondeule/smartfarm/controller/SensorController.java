@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 //센서 데이터 수집 및 모니터링 API
 @RestController
@@ -42,13 +43,13 @@ public class SensorController {
 
     //최신 센서 측정 기록 조회
     @GetMapping("/latest")
-    public ResponseEntity<SensorDataDTO> getLatestSensorData(@PathVariable Long farmId,
-                                                             @PathVariable Long houseId,
-                                                             @AuthenticationPrincipal UserClaimDTO userInfo){
+    public ResponseEntity<Map<Long, SensorDataDTO>> getLatestSensorData(@PathVariable Long farmId,
+                                                                  @PathVariable Long houseId,
+                                                                  @AuthenticationPrincipal UserClaimDTO userInfo) {
         if (userInfo != null) {
             if (userInfo.getAuthLvel().equals(AuthLvel.ADMIN) ||
                     userService.getUserOwnedFarmId(userInfo.getUserId()) == farmId) {
-                return ResponseEntity.ok(sensorService.getLatestSensor(farmId, houseId));
+                return ResponseEntity.ok(sensorService.getLatestSensor(farmId));
             }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

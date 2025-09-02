@@ -41,7 +41,6 @@ export default function FarmMonitoringPage() {
     const {data: houses = [], isLoading: housesLoading, error: housesError} = useQuery({
         queryKey: ["houses", farmId],
         queryFn: () => getHouseList({farmId}).then(res => res.data),
-        refetchInterval: 5000, // 5초마다 polling
         enabled: !!farmId,
     });
 

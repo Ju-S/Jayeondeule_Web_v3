@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Button, Card} from "react-bootstrap";
 
-export default function LatestSensorMonitor({latestSensorData}) {
+export default function LatestSensorMonitor({latestSensorData, houseName}) {
     return (
         <>
             {latestSensorData && (
@@ -16,6 +16,18 @@ export default function LatestSensorMonitor({latestSensorData}) {
                     }}>
                         {new Date(latestSensorData.recdDttm).toLocaleString()}
                     </div>
+
+                    {houseName && (
+                        <div style={{
+                            position: "absolute",
+                            top: "-1.5rem",
+                            left: "0",
+                            fontWeight: "bold",
+                            fontSize: "0.9rem"
+                        }}>
+                            {houseName}
+                        </div>
+                    )}
 
                     <Card className="p-3 mb-3"
                           style={{overflowX: "auto", minHeight: "100px", display: "flex", alignItems: "center", overflow: "hidden"}}>

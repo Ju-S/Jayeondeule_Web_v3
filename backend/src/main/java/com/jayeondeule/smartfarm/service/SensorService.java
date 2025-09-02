@@ -3,7 +3,9 @@ package com.jayeondeule.smartfarm.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jayeondeule.smartfarm.dto.sensor.SensorDataDTO;
+import com.jayeondeule.smartfarm.entity.house.FarmHouse;
 import com.jayeondeule.smartfarm.entity.sensor.SensorRecording;
+import com.jayeondeule.smartfarm.repository.FarmHouseRepository;
 import com.jayeondeule.smartfarm.repository.SensorRecordingRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +17,16 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SensorService {
     private final SensorRecordingRepository sensorRecordingRepository;
+    private final FarmHouseRepository farmHouseRepository;
     private final ObjectMapper mapper;
 
     @PostConstruct
@@ -46,7 +52,17 @@ public class SensorService {
                 .toList();
     }
 
-    public SensorDataDTO getLatestSensor(long farmId, long houseId) {
-        return mapper.convertValue(sensorRecordingRepository.findTopByFarmIdAndHousIdOrderByRecdDttmDesc(farmId, houseId), SensorDataDTO.class);
+    public Map<Long, SensorDataDTO> getLatestSensor(long farmId) {
+        List<FarmHouse> houseList = farmHouseRepository.findAllByFarmId(farmId);
+        Map<Long, SensorDataDTO> result = new HashMap<>();
+
+        houseList.stream().map(item ->
+                result.put(
+                        item.getHousId(),
+                        mapper.convertValue(sensorRecordingRepository.findTopByFarmIdAndHousIdOrderByRecdDttmDesc(farmId, item.getHousId()), SensorDataDTO.class)
+                )
+        );
+
+        return result;
     }
 }
