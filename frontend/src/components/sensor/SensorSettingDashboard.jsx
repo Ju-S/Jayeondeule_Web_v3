@@ -2,8 +2,13 @@ import React, {useEffect, useState} from "react";
 import {Card, Form, Row, Col, Button, InputGroup} from "react-bootstrap";
 import {Dash} from "react-bootstrap-icons";
 import {deleteSetting, getSettings, insertSettings, patchSetting} from "../../utils/settingUtil.js";
+import AlertModal from "../common/AlertModal.jsx";
 
 export default function SensorSettingDashboard({farmId, selectedHouse}) {
+    const [show, setShow] = useState(false);
+
+    const [deleteTarget, setDeleteTarget] = useState({});
+
     const [sensorSetting, setSensorSetting] = useState({
         tprtMin: "",
         tprtMax: "",
@@ -44,6 +49,7 @@ export default function SensorSettingDashboard({farmId, selectedHouse}) {
             deleteSetting(farmId, selectedHouse, waterSchedules[idx].setnDttm);
             setWaterSchedules(prev => prev.filter((_, i) => i !== idx));
         }
+        setShow(false);
     };
 
     useEffect(() => {
@@ -216,7 +222,10 @@ export default function SensorSettingDashboard({farmId, selectedHouse}) {
                                         padding: "0"
                                     }}
                                     variant="danger"
-                                    onClick={() => deleteSchedule(idx, 'LIGHT')}
+                                    onClick={() => {
+                                        setShow(true);
+                                        setDeleteTarget({id: idx, type: 'LIGHT'});
+                                    }}
                                 >
                                     <Dash/>
                                 </Button>
@@ -255,7 +264,10 @@ export default function SensorSettingDashboard({farmId, selectedHouse}) {
                                         padding: "0"
                                     }}
                                     variant="danger"
-                                    onClick={() => deleteSchedule(idx, 'WATER')}
+                                    onClick={() => {
+                                        setShow(true);
+                                        setDeleteTarget({id: idx, type: 'WATER'});
+                                    }}
                                 >
                                     <Dash/>
                                 </Button>
@@ -265,6 +277,15 @@ export default function SensorSettingDashboard({farmId, selectedHouse}) {
                 ))}
                 <Button variant="success" size="sm" onClick={() => addSchedule("WATER")}>+ 시간 추가</Button>
             </Card>
+            <AlertModal
+                show={show}
+                hideModalFunc={() => setShow(false)}
+                onClickFunc={() => deleteSchedule(deleteTarget.id, deleteTarget.type)}
+                title="정말 삭제하시겠습니까?"
+                body="삭제 후 복구가 불가능할 수 있습니다."
+                variant="danger"
+                buttonMsg="삭제"
+            />
         </div>
     );
 }
