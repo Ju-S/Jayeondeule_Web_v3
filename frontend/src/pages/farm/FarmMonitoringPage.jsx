@@ -154,7 +154,7 @@ export default function FarmMonitoringPage() {
             />
 
             {/* 탭 */}
-            <Tabs id="custom-tabs">
+            <Tabs id="custom-tabs" className="d-flex justify-content-end">
                 <Tab
                     eventKey="sensor"
                     title={
