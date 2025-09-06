@@ -14,23 +14,22 @@ import {useEffect, useState} from "react";
 import './SensorLineChart.css';
 import dayjs from "dayjs";
 
-export default function SensorLineChart({data, lineConfig}) {
-    // 라인 보이기/숨기기 상태
-    const [visibleLines, setVisibleLines] = useState({});
-
-    // visibleLines 초기 세팅
-    useEffect(() => {
-        const initialState = lineConfig.reduce((acc, item) => {
-            acc[item.key] = true;
-            return acc;
-        }, {});
-        setVisibleLines(initialState);
-    }, [lineConfig]);
-
+export default function SensorLineChart({data, lineConfig, visibleLines, setVisibleLines}) {
     // Legend 클릭 시 토글
     const onToggleLine = (lineKey) => {
         setVisibleLines(prev => ({...prev, [lineKey]: !prev[lineKey]}));
     };
+
+    // visibleLines 초기 세팅 (한 번만)
+    useEffect(() => {
+        if (Object.keys(visibleLines).length === 0) {
+            const initialState = lineConfig.reduce((acc, item) => {
+                acc[item.key] = true;
+                return acc;
+            }, {});
+            setVisibleLines(initialState);
+        }
+    }, [lineConfig]);
 
     // 3등분으로 tick 선택
     const xTicks = [];
