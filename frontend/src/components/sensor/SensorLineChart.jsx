@@ -14,7 +14,9 @@ import {useEffect, useState} from "react";
 import './SensorLineChart.css';
 import dayjs from "dayjs";
 
-export default function SensorLineChart({data, lineConfig, visibleLines, setVisibleLines}) {
+export default function SensorLineChart({data, lineConfig}) {
+    const [visibleLines, setVisibleLines] = useState({});
+
     // Legend 클릭 시 토글
     const onToggleLine = (lineKey) => {
         setVisibleLines(prev => ({...prev, [lineKey]: !prev[lineKey]}));
