@@ -36,7 +36,7 @@ public class SensorService {
 
     //start~end까지의 sensor데이터 조회
     public List<SensorDataDTO> getSensorHistory(long farmId, long houseId, LocalDateTime start, LocalDateTime end) {
-        long maxCount = 1000;
+        long maxCount = 500;
         List<Object[]> raw = sensorRecordingRepository.findAveragedDownsampled(farmId, houseId, start, end, maxCount);
 
         return raw.stream()

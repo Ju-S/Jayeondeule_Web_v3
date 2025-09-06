@@ -1,0 +1,7 @@
+td {
+    white-space: nowrap;
+}
+
+.sensorItem:hover td{
+    background-color: #F4F8FDFF;
+}

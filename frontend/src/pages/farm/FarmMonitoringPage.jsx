@@ -20,6 +20,8 @@ import "./FarmMonitoringPage.css";
 import MemoDashboard from "../../components/memo/MemoDashboard.jsx";
 import {getUser} from "../../utils/userUtil.js";
 import SensorSettingDashboard from "../../components/sensor/SensorSettingDashboard.jsx";
+import LatestSensorItem from "../../components/sensor/LatestSensorItem.jsx";
+import LatestSensorSelected from "../../components/sensor/LatestSensorSelected.jsx";
 
 export default function FarmMonitoringPage() {
     const {farmId} = useParams();
@@ -121,15 +123,15 @@ export default function FarmMonitoringPage() {
                     <Accordion.Header>
                         <span style={{fontWeight: "bold"}}>실시간 재배사 현황</span>
                     </Accordion.Header>
-                    <Accordion.Body>
-                        {!latestSensorLoading && Object.entries(latestSensorData).map(([key, value]) => {
-                            const house = houses.find(h => h.housId === Number(key));
-                            if (!house) return null;
-                            return (
-                                <LatestSensorMonitor latestSensorData={value}
-                                                     houseName={house.housName}/>
-                            )
-                        })}
+                    <Accordion.Body className="p-0">
+                        {!latestSensorLoading &&
+                            <LatestSensorMonitor
+                                latestSensorData={latestSensorData}
+                                houses={houses}
+                                setSelectedHouse={setSelectedHouse}
+                                selectedHouse={selectedHouse}
+                            />
+                        }
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
@@ -139,8 +141,8 @@ export default function FarmMonitoringPage() {
                 const data = latestSensorData[selectedHouse.housId];
                 if (!data) return null;
                 return (
-                    <LatestSensorMonitor latestSensorData={data}
-                                         houseName={selectedHouse.housName}/>
+                    <LatestSensorSelected latestSensorData={data}
+                                      house={selectedHouse}/>
                 )
             })()}
 
