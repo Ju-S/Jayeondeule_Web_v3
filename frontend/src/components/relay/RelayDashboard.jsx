@@ -9,7 +9,7 @@ import RelayCard from "./RelayCard.jsx";
 import LoadingPage from "../../pages/common/LoadingPage.jsx";
 import ErrorPage from "../../pages/common/ErrorPage.jsx";
 
-export default function RelayDashboard({farmId, house}) {
+export default function RelayDashboard({farmId, house, setSelectedHouse}) {
     const queryClient = useQueryClient();
 
     const [relayLabels, setRelayLabels] = useState([]);
@@ -74,7 +74,14 @@ export default function RelayDashboard({farmId, house}) {
     // 수동/자동 모드 mutation
     const toggleModeMutation = useMutation({
         mutationFn: (updatedHouse) => patchHouse({farmId, ...updatedHouse}),
-        onSuccess: () => queryClient.invalidateQueries(["houses", farmId]),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(["houses", farmId]);
+            const newHouses = queryClient.getQueryData(["houses", farmId]);
+            if (newHouses) {
+                const newHouse = newHouses.find(h => h.housId === house.housId);
+                if (newHouse) setSelectedHouse(newHouse);
+            }
+        },
     });
 
     const handleToggleMode = () => {
