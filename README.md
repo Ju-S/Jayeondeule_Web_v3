@@ -130,24 +130,24 @@
 ### 회원가입
 ![회원가입](./screenshot/회원가입.png)
 ### 농장 목록
-![농장 목록](./screenshot/농장 목록.png)
+![농장 목록](screenshot/농장_목록.png)
 ### 농장 등록
-![농장 등록](./screenshot/농장 등록.png)
+![농장 등록](screenshot/농장_등록.png)
 ### 농장 수정
-![농장 수정](./screenshot/농장 수정.png)
+![농장 수정](screenshot/농장_수정.png)
 ### 농장 현황
-![농장 현황](./screenshot/농장 현황.png)
+![농장 현황](screenshot/농장_현황.png)
 ### 재배사 등록
-![재배사 등록](./screenshot/재배사 등록.png)
+![재배사 등록](screenshot/재배사_등록.png)
 ### 재배사 수정
-![재배사 수정](./screenshot/재배사 수정.png)
+![재배사 수정](screenshot/재배사_수정.png)
 ### 재배사 사용자 등록
-![사용자 등록](./screenshot/사용자 등록.png)
+![사용자 등록](screenshot/사용자_등록.png)
 ### 재배사 센서 기록 조회
-![센서 기록 조회](./screenshot/센서 기록 조회.png)
+![센서 기록 조회](screenshot/센서_기록_조회.png)
 ### 재배사 릴레이 현황 및 조작
-![릴레이 현황](./screenshot/릴레이 현황.png)
+![릴레이 현황](screenshot/릴레이_현황.png)
 ### 재배사 메모
-![재배사 메모](./screenshot/재배사 메모.png)
+![재배사 메모](screenshot/재배사_메모.png)
 ### 재배사 설정
-![재배사 설정](./screenshot/재배사 설정.png)
+![재배사 설정](screenshot/재배사_설정.png)
