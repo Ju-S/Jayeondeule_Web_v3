@@ -126,9 +126,9 @@
 
 ---
 ### 로그인
-![로그인](./screenshot/로그인.png)
+![로그인](screenshot/로그인.png)
 ### 회원가입
-![회원가입](./screenshot/회원가입.png)
+![회원가입](screenshot/회원가입.png)
 ### 농장 목록
 ![농장 목록](screenshot/농장_목록.png)
 ### 농장 등록
